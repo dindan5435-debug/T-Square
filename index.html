@@ -9,8 +9,9 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="T-SQUARE" />
-<link rel="apple-touch-icon" href="tsquare-logo-180.png" />
-<link rel="icon" href="tsquare-logo-192.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="icon" href="icon-192.png" />
+<link rel="manifest" href="manifest.json" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 
@@ -102,7 +103,7 @@
   .card-main { padding: 14px 16px 6px; display: flex; gap: 12px; align-items: flex-start; }
   .card-title { font-weight: 600; font-size: 15.5px; line-height: 1.4; }
   .card-title.strike { text-decoration: line-through; color: var(--pencil); }
-  .card-subject { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 2px; }
+  .card-subject { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; margin-top: 4px; padding: 2px 8px; border-radius: 4px; }
   .card-note { font-size: 12.5px; color: var(--pencil); margin-top: 3px; line-height: 1.5; white-space: pre-wrap; }
 
   .checks { display: flex; gap: 16px; padding: 4px 16px 12px 16px; font-size: 12.5px; }
@@ -538,6 +539,26 @@
     { code: "01056538", short: "วิศวกรรมความน่าเชื่อถือและความเสี่ยง", group: "วิชาเลือก ME — วัสดุและกลศาสตร์" },
   ];
 
+  const GROUP_COLORS = {
+    "ปี 1 เทอม 1": { bg: "#E6F1FB", text: "#0C447C" },
+    "ปี 1 เทอม 2": { bg: "#EEEDFE", text: "#3C3489" },
+    "ปี 2 เทอม 1": { bg: "#EAF3DE", text: "#27500A" },
+    "ปี 2 เทอม 2": { bg: "#FBEAF0", text: "#72243E" },
+    "ปี 3 เทอม 1": { bg: "#FAECE7", text: "#712B13" },
+    "ปี 3 เทอม 2": { bg: "#FAEEDA", text: "#633806" },
+    "ปี 3 ภาคฤดูร้อน": { bg: "#F1EFE8", text: "#444441" },
+    "ปี 4 เทอม 1": { bg: "#FCEBEB", text: "#791F1F" },
+    "ปี 4 เทอม 2": { bg: "#E1F5EE", text: "#085041" },
+    "วิชาเลือก ME — ยานยนต์": { bg: "#FDEDF7", text: "#8A2A6B" },
+    "วิชาเลือก ME — ความร้อนและของไหล": { bg: "#E3F4FB", text: "#1B5E76" },
+    "วิชาเลือก ME — ออกแบบและการผลิต": { bg: "#F0F4E0", text: "#4B5E1C" },
+    "วิชาเลือก ME — พลังงานและสิ่งแวดล้อม": { bg: "#FFF0E0", text: "#8A4B12" },
+    "วิชาเลือก ME — วัสดุและกลศาสตร์": { bg: "#EDEAF7", text: "#4A3B7A" },
+  };
+  function groupColor(group) {
+    return GROUP_COLORS[group] || { bg: "#E4ECF3", text: "#333A2E" };
+  }
+
   const WORKOUT_STORAGE_KEY = "tsquare-workout-v1";
   const WORKOUT_DAYS = [
     {
@@ -892,11 +913,14 @@
       if (!byGroup[g]) { byGroup[g] = []; groups.push(g); }
       byGroup[g].push(s);
     });
-    sel.innerHTML = groups.map(g => `
-      <optgroup label="${escapeHtml(g)}">
-        ${byGroup[g].map(s => `<option value="${s.code}">${s.code} — ${escapeHtml(s.short)}</option>`).join('')}
+    sel.innerHTML = groups.map(g => {
+      const gc = groupColor(g);
+      return `
+      <optgroup label="${escapeHtml(g)}" style="background:${gc.bg};color:${gc.text};">
+        ${byGroup[g].map(s => `<option value="${s.code}" style="background:${gc.bg};color:${gc.text};">${s.code} — ${escapeHtml(s.short)}</option>`).join('')}
       </optgroup>
-    `).join('');
+    `;
+    }).join('');
   }
 
   function openMigrate() {
@@ -1328,7 +1352,7 @@
         <div class="card-main">
           <div style="flex:1;min-width:0;">
             <div class="card-title ${t.submitted ? 'strike' : ''}">${escapeHtml(t.title)}</div>
-            <div class="card-subject">${subj.code} · ${escapeHtml(subj.short)}</div>
+            <div class="card-subject" style="background:${groupColor(subj.group).bg};color:${groupColor(subj.group).text};">${subj.code} · ${escapeHtml(subj.short)}</div>
             ${t.note ? `<div class="card-note">${escapeHtml(t.note)}</div>` : ''}
           </div>
         </div>
@@ -1580,32 +1604,15 @@
     container.innerHTML = list.map(renderHomeworkCard).join('');
   }
 
-  function attachManifest() {
-    try {
-      const manifest = {
-        name: "T-SQUARE — สมุดงาน & นิสัย",
-        short_name: "T-SQUARE",
-        start_url: ".",
-        display: "standalone",
-        background_color: "#F2EFE5",
-        theme_color: "#F2EFE5",
-        icons: [
-          { src: "tsquare-logo-192.png", sizes: "192x192", type: "image/png" },
-          { src: "tsquare-logo-512.png", sizes: "512x512", type: "image/png" }
-        ]
-      };
-      const blob = new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("link");
-      link.rel = "manifest";
-      link.href = url;
-      document.head.appendChild(link);
-    } catch (e) {
-      // manifest injection is a nice-to-have; ignore failures silently
+  function registerServiceWorker() {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js").catch(() => {
+        // offline support is a nice-to-have; ignore registration failures silently
+      });
     }
   }
 
-  attachManifest();
+  registerServiceWorker();
   populateSubjectSelect();
   loadWorkout();
   loadTasks();
