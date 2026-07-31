@@ -185,6 +185,16 @@
 
   .stats-box { max-width: 560px; }
 
+  .subject-trigger { width: 100%; text-align: left; border: 1.5px solid var(--line-soft); border-radius: 3px; padding: 7px 9px; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 13px; background: #fff; color: var(--ink); cursor: pointer; }
+  .subject-trigger.has-value { font-weight: 600; }
+  .subject-picker-box { max-width: 480px; max-height: 80vh; display: flex; flex-direction: column; }
+  .subject-search { width: 100%; border: 1.5px solid var(--line-soft); border-radius: 3px; padding: 8px 10px; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 13.5px; background: #fff; color: var(--ink); box-sizing: border-box; margin-bottom: 10px; }
+  .subject-picker-list { overflow-y: auto; flex: 1; }
+  .subject-picker-group-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 8px 4px 4px; }
+  .subject-picker-item { display: block; width: 100%; text-align: left; border: none; border-radius: 4px; padding: 8px 10px; margin-bottom: 4px; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 13px; cursor: pointer; }
+  .subject-picker-item .code { font-family: 'IBM Plex Mono', monospace; font-size: 11px; opacity: 0.75; margin-right: 4px; }
+  .subject-picker-empty { text-align: center; color: var(--pencil); font-size: 13px; padding: 20px; }
+
   .workout-day-card { background: var(--card); border-radius: 4px; border-left: 5px solid var(--amber); box-shadow: 0 2px 8px rgba(80,70,50,0.08); margin-bottom: 14px; }
   .workout-day-title { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; padding: 12px 16px 8px; color: var(--ink); }
   .workout-exercise-list { display: flex; flex-direction: column; }
@@ -337,6 +347,17 @@
     </div>
   </div>
 
+  <div class="form-overlay" id="subject-picker-overlay" onclick="if(event.target.id==='subject-picker-overlay')closeSubjectPicker()">
+    <div class="formbox subject-picker-box" onclick="event.stopPropagation()">
+      <h3>
+        <span>เลือกวิชา</span>
+        <button type="button" class="closebtn" onclick="closeSubjectPicker()">&times;</button>
+      </h3>
+      <input type="text" id="subject-search" class="subject-search" placeholder="ค้นหาวิชา..." oninput="renderSubjectPicker(this.value)" />
+      <div id="subject-picker-list" class="subject-picker-list"></div>
+    </div>
+  </div>
+
   <div class="empty" id="empty-state" style="display:none;">ยังไม่มีงานในสมุดตอนนี้ — กด “เพิ่มงาน” เพื่อบันทึกงานหรือการบ้านชิ้นแรก</div>
 
   <div class="list" id="task-list"></div>
@@ -356,7 +377,8 @@
       <div id="hw-only-fields">
         <div class="field">
           <label>วิชา</label>
-          <select id="f-subject"></select>
+          <input type="hidden" id="f-subject" value="" />
+          <button type="button" id="f-subject-trigger" class="subject-trigger" onclick="openSubjectPicker()">เลือกวิชา</button>
         </div>
 
         <div class="row2">
@@ -904,22 +926,71 @@
     persistWorkout();
   }
 
-  function populateSubjectSelect() {
-    const sel = document.getElementById('f-subject');
+  function setSubjectTriggerDisplay(code) {
+    const trigger = document.getElementById('f-subject-trigger');
+    const subj = subjectByCode(code);
+    if (!subj) {
+      trigger.textContent = 'เลือกวิชา';
+      trigger.classList.remove('has-value');
+      trigger.style.background = '';
+      trigger.style.color = '';
+      trigger.style.borderColor = '';
+      return;
+    }
+    const gc = groupColor(subj.group);
+    trigger.textContent = `${subj.code} — ${subj.short}`;
+    trigger.classList.add('has-value');
+    trigger.style.background = gc.bg;
+    trigger.style.color = gc.text;
+    trigger.style.borderColor = gc.text;
+  }
+
+  function selectSubject(code) {
+    document.getElementById('f-subject').value = code;
+    setSubjectTriggerDisplay(code);
+    closeSubjectPicker();
+  }
+
+  function openSubjectPicker() {
+    document.getElementById('subject-search').value = '';
+    renderSubjectPicker('');
+    document.getElementById('subject-picker-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('subject-search').focus(), 50);
+  }
+
+  function closeSubjectPicker() {
+    document.getElementById('subject-picker-overlay').classList.remove('open');
+  }
+
+  function renderSubjectPicker(query) {
+    const q = (query || '').trim().toLowerCase();
+    const filtered = q
+      ? SUBJECTS.filter(s => s.code.toLowerCase().includes(q) || s.short.toLowerCase().includes(q))
+      : SUBJECTS;
+
     const groups = [];
     const byGroup = {};
-    SUBJECTS.forEach(s => {
+    filtered.forEach(s => {
       const g = s.group || 'อื่นๆ';
       if (!byGroup[g]) { byGroup[g] = []; groups.push(g); }
       byGroup[g].push(s);
     });
-    sel.innerHTML = groups.map(g => {
+
+    const list = document.getElementById('subject-picker-list');
+    if (groups.length === 0) {
+      list.innerHTML = '<div class="subject-picker-empty">ไม่พบวิชาที่ค้นหา</div>';
+      return;
+    }
+    list.innerHTML = groups.map(g => {
       const gc = groupColor(g);
       return `
-      <optgroup label="${escapeHtml(g)}" style="background:${gc.bg};color:${gc.text};">
-        ${byGroup[g].map(s => `<option value="${s.code}" style="background:${gc.bg};color:${gc.text};">${s.code} — ${escapeHtml(s.short)}</option>`).join('')}
-      </optgroup>
-    `;
+        <div class="subject-picker-group-label" style="color:${gc.text};">${escapeHtml(g)}</div>
+        ${byGroup[g].map(s => `
+          <button type="button" class="subject-picker-item" style="background:${gc.bg};color:${gc.text};" onclick="selectSubject('${s.code}')">
+            <span class="code">${s.code}</span>${escapeHtml(s.short)}
+          </button>
+        `).join('')}
+      `;
     }).join('');
   }
 
@@ -1025,6 +1096,7 @@
     document.getElementById('f-track-mode').value = 'binary';
     document.getElementById('f-levels').value = '';
     document.getElementById('f-unit').value = '';
+    if (SUBJECTS[0]) selectSubject(SUBJECTS[0].code);
     applyFormTypeVisibility();
     document.getElementById('form-heading').textContent = formType === 'habit' ? 'เพิ่มนิสัยใหม่' : 'เพิ่มงานใหม่';
     document.getElementById('submit-btn').textContent = formType === 'habit' ? 'บันทึกนิสัย' : 'บันทึกงาน';
@@ -1040,6 +1112,7 @@
     document.getElementById('f-note').value = t.note || '';
     if (formType === 'homework') {
       document.getElementById('f-subject').value = t.subjectCode;
+      setSubjectTriggerDisplay(t.subjectCode);
       document.getElementById('f-duedate').value = t.dueDate || '';
       document.getElementById('f-priority').value = t.priority || 'ปกติ';
       formSubtasks = (t.subtasks || []).map(s => ({ ...s }));
@@ -1613,7 +1686,6 @@
   }
 
   registerServiceWorker();
-  populateSubjectSelect();
   loadWorkout();
   loadTasks();
 </script>
