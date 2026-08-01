@@ -78,6 +78,11 @@
   .editmodebtn.active { background: var(--teal); color: #fff; }
   .migratebtn { background: var(--card); color: var(--pencil); border: 1px solid var(--line-soft); padding: 6px 12px; border-radius: 3px; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
 
+  .backup-reminder { max-width: 780px; margin: 0 auto 14px; background: var(--amber-soft); border: 1.5px solid var(--amber); border-radius: 4px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink); }
+  .backup-reminder-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .backup-reminder-btn { background: var(--amber); color: #fff; border: none; padding: 6px 12px; border-radius: 3px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; white-space: nowrap; }
+  .backup-reminder-dismiss { background: none; border: none; color: var(--pencil); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; }
+
   .cat-tabs { max-width: 780px; margin: 0 auto 14px; display: flex; gap: 8px; }
   .cat-tab { flex: 1; background: var(--card); border: 1.5px solid var(--line-soft); color: var(--pencil); padding: 10px; border-radius: 4px; font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
   .cat-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
@@ -93,6 +98,7 @@
   .card.delete-mode .checks, .card.delete-mode .subtasks { pointer-events: none; opacity: 0.4; }
 
   .list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .list.habit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: start; }
   .empty { max-width: 780px; margin: 40px auto; text-align: center; border: 1.5px dashed var(--line-soft); border-radius: 4px; padding: 40px 20px; color: var(--pencil); }
   .saveerror { max-width: 780px; margin: 0 auto 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--amber); text-align: center; display:none; }
 
@@ -168,20 +174,28 @@
   .day-cell.month-day-cell { width: 26px; height: 26px; aspect-ratio: unset; font-size: 9.5px; }
 
   .habit-card { border-left-color: var(--teal); }
-  .habit-card-body { display: flex; gap: 14px; flex-wrap: wrap; padding: 14px 16px 12px; align-items: flex-start; }
-  .habit-card-left { flex: 1 1 150px; min-width: 140px; }
+  .habit-card-body { display: flex; gap: 10px; padding: 12px 14px 10px; align-items: flex-start; }
+  .habit-card-left { flex: 1; min-width: 0; }
   .habit-card-right { flex-shrink: 0; }
-  .habit-streak-row { display: flex; align-items: center; gap: 12px; padding: 4px 0; flex-wrap: wrap; }
-  .habit-streak-stat { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--pencil); }
-  .habit-streak-stat b { display: block; font-size: 18px; color: var(--ink); font-weight: 700; }
-  .habit-today-btn { background: var(--card-warm); color: var(--teal); border: 1.5px solid var(--teal); padding: 7px 12px; border-radius: 4px; font-weight: 600; font-size: 12.5px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
+  .habit-streak-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; flex-wrap: wrap; }
+  .habit-streak-stat { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--pencil); }
+  .habit-streak-stat b { display: block; font-size: 16px; color: var(--ink); font-weight: 700; }
+  .habit-today-btn { background: var(--card-warm); color: var(--teal); border: 1.5px solid var(--teal); padding: 6px 10px; border-radius: 4px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; width: 100%; }
   .habit-today-btn.done { background: var(--teal); color: #fff; }
   .card.delete-mode .habit-card-body, .card.edit-mode .habit-card-body { pointer-events: none; opacity: 0.4; }
 
   .habit-level-row { display: flex; align-items: center; gap: 6px; padding: 4px 0; flex-wrap: wrap; }
+  .habit-day-toggle { display: flex; gap: 5px; padding: 6px 0 0; }
+  .habit-day-toggle button { background: var(--card-warm); border: 1.5px solid var(--line-soft); color: var(--pencil); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
+  .habit-day-toggle button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
   .habit-level-btn { background: var(--card-warm); color: var(--pencil); border: 1.5px solid var(--line-soft); padding: 6px 10px; border-radius: 4px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
   .habit-level-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
   .habit-stats-btn { background: none; border: none; color: var(--teal); font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; text-decoration: underline; padding: 4px 0; }
+
+  .mini-heatmap-wrap { max-width: 84px; padding-top: 2px; }
+  .mini-heatmap-row { display: flex; flex-wrap: wrap; gap: 3px; }
+  .mini-heatmap-cell { width: 14px; height: 14px; border-radius: 3px; background: var(--card-warm); border: 1.5px solid var(--line-soft); box-sizing: border-box; flex-shrink: 0; }
+  .mini-heatmap-label { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; color: var(--pencil); text-align: right; margin-bottom: 3px; }
 
   .stats-box { max-width: 560px; }
 
@@ -195,6 +209,16 @@
   .subject-picker-item { display: block; width: 100%; text-align: left; border: none; border-radius: 4px; padding: 8px 10px; margin-bottom: 4px; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 13px; cursor: pointer; }
   .subject-picker-item .code { font-family: 'IBM Plex Mono', monospace; font-size: 11px; opacity: 0.75; margin-right: 4px; }
   .subject-picker-empty { text-align: center; color: var(--pencil); font-size: 13px; padding: 20px; }
+
+  .habit-template-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .habit-template-chip { background: var(--card-warm); border: 1.5px solid var(--line-soft); border-radius: 6px; padding: 6px 10px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; color: var(--ink); display: flex; align-items: center; gap: 4px; }
+  .habit-template-chip.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+  .habit-summary-bar { max-width: 780px; margin: 0 auto 14px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+  .habit-summary-chip { flex-shrink: 0; background: var(--card); border: 1.5px solid var(--line-soft); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .habit-summary-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-soft); flex-shrink: 0; }
+  .habit-summary-chip.done .dot { background: var(--teal); }
+  .habit-summary-chip b { font-family: 'IBM Plex Mono', monospace; color: var(--teal); }
 
   .workout-day-card { background: var(--card); border-radius: 4px; border-left: 5px solid var(--amber); box-shadow: 0 2px 8px rgba(80,70,50,0.08); margin-bottom: 14px; }
   .workout-day-title { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; padding: 12px 16px 8px; color: var(--ink); }
@@ -218,8 +242,8 @@
   .stat-card-label { font-size: 10.5px; color: var(--pencil); font-family: 'IBM Plex Mono', monospace; }
   .stat-card-val { font-size: 19px; font-weight: 700; color: var(--ink); }
   .heatmap-wrap { overflow-x: auto; padding-bottom: 4px; }
-  .heatmap-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 13px); gap: 3px; width: max-content; }
-  .heatmap-cell { width: 13px; height: 13px; border-radius: 2px; background: var(--card-warm); }
+  .heatmap-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 18px); gap: 3px; width: max-content; }
+  .heatmap-cell { width: 18px; height: 18px; border-radius: 3px; background: var(--card-warm); border: 1.5px solid var(--line-soft); box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; font-weight: 600; color: var(--pencil); }
   .heatmap-legend { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 10px; color: var(--pencil); font-family: 'IBM Plex Mono', monospace; }
   .heatmap-legend .heatmap-cell { width: 10px; height: 10px; }
 
@@ -272,6 +296,14 @@
     <button type="button" class="migratebtn" onclick="openMigrate()">⇄ ย้าย/สำรองข้อมูล</button>
   </div>
 
+  <div class="backup-reminder" id="backup-reminder" style="display:none;">
+    <span id="backup-reminder-text"></span>
+    <div class="backup-reminder-actions">
+      <button type="button" class="backup-reminder-btn" onclick="openMigrate()">สำรองตอนนี้</button>
+      <button type="button" class="backup-reminder-dismiss" onclick="dismissBackupReminder()">&times;</button>
+    </div>
+  </div>
+
   <div class="saveerror" id="save-error">บันทึกไม่สำเร็จ ลองอีกครั้ง — ข้อมูลอาจไม่ถูกเซฟ</div>
 
   <div class="toolbar" id="main-toolbar">
@@ -310,7 +342,8 @@
       <div class="field">
         <label>ขั้นที่ 1 — คัดลอกข้อมูลจากที่นี่ (เครื่องเก่า/แอปเดิม)</label>
         <textarea id="migrate-export" readonly style="min-height:90px;font-family:'IBM Plex Mono',monospace;font-size:11px;" onclick="this.select()"></textarea>
-        <button type="button" class="subtask-addbtn" style="width:100%;margin-top:6px;" onclick="copyMigrateData()">คัดลอกข้อความทั้งหมด</button>
+        <button type="button" class="subtask-addbtn" style="width:100%;margin-top:6px;" id="share-backup-btn" onclick="shareBackupData()">📤 แชร์ไปยังโน้ต</button>
+        <button type="button" class="subtask-addbtn" style="width:100%;margin-top:6px;background:var(--card-warm);color:var(--ink);border:1.5px solid var(--line-soft);" onclick="copyMigrateData()">คัดลอกข้อความทั้งหมด</button>
         <div id="migrate-copy-msg" style="font-size:11.5px;color:var(--teal);margin-top:4px;display:none;">คัดลอกแล้ว ✓</div>
       </div>
 
@@ -361,6 +394,8 @@
 
   <div class="empty" id="empty-state" style="display:none;">ยังไม่มีงานในสมุดตอนนี้ — กด “เพิ่มงาน” เพื่อบันทึกงานหรือการบ้านชิ้นแรก</div>
 
+  <div class="habit-summary-bar" id="habit-summary-bar" style="display:none;"></div>
+
   <div class="list" id="task-list"></div>
 
   <div class="form-overlay" id="form-overlay" onclick="closeFormOnOverlay(event)">
@@ -399,6 +434,11 @@
       </div>
 
       <div id="habit-only-fields" style="display:none;">
+        <div class="field" id="habit-template-field">
+          <label>เลือกจากแบบสำเร็จรูป (หรือกำหนดเองด้านล่าง)</label>
+          <div class="habit-template-row" id="habit-template-row"></div>
+        </div>
+
         <div class="field">
           <label>วิธีติดตาม</label>
           <select id="f-track-mode" onchange="applyTrackModeVisibility()">
@@ -415,6 +455,18 @@
             <label>หน่วย</label>
             <input type="text" id="f-unit" placeholder="เช่น หน้า, นาที, แก้ว" />
           </div>
+        </div>
+
+        <div class="field">
+          <label>ความถี่เป้าหมาย</label>
+          <select id="f-goal-type" onchange="applyGoalTypeVisibility()">
+            <option value="daily">ทุกวัน</option>
+            <option value="weekly">รายสัปดาห์ (กำหนดจำนวนครั้ง)</option>
+          </select>
+        </div>
+        <div class="field" id="habit-weekly-field" style="display:none;">
+          <label>จำนวนครั้งต่อสัปดาห์</label>
+          <input type="number" id="f-weekly-target" min="1" max="7" value="3" />
         </div>
       </div>
 
@@ -659,6 +711,15 @@
   ];
   let workoutState = {}; // { [exerciseId]: { variant: 0, sets: 3, weight: '', unit: 'kg' } }
 
+  const HABIT_TEMPLATES = [
+    { icon: "💧", title: "ดื่มน้ำให้พอ", mode: "levels", levels: [4, 6, 8], unit: "แก้ว" },
+    { icon: "📖", title: "อ่านหนังสือ", mode: "levels", levels: [5, 10, 15], unit: "หน้า" },
+    { icon: "🧘", title: "ทำสมาธิ", mode: "levels", levels: [5, 10, 15], unit: "นาที" },
+    { icon: "🏃", title: "ออกกำลังกาย", mode: "binary" },
+    { icon: "🌙", title: "นอนก่อน 5 ทุ่ม", mode: "binary" },
+    { icon: "🥦", title: "กินผัก/ผลไม้", mode: "levels", levels: [1, 2, 3], unit: "มื้อ" },
+  ];
+
   let tasks = [];
   let sortMode = "due";
   let showSubmitted = true;
@@ -670,6 +731,12 @@
   let activeCategory = "homework";
   let formType = "homework";
   let statsHabitId = null;
+  let logDayTarget = {}; // { [habitId]: 'today' | 'yesterday' } — which day the quick-log controls act on
+
+  function setLogDayTarget(habitId, which) {
+    logDayTarget[habitId] = which;
+    render();
+  }
   let statsPeriod = "all";
 
   function setCategory(cat) {
@@ -995,6 +1062,44 @@
     }).join('');
   }
 
+  const BACKUP_REMINDER_DAYS = 7;
+
+  function markBackupDone() {
+    localStorage.setItem('tsquare-last-backup', String(Date.now()));
+    localStorage.removeItem('tsquare-backup-reminder-dismissed');
+    checkBackupReminder();
+  }
+
+  function dismissBackupReminder() {
+    localStorage.setItem('tsquare-backup-reminder-dismissed', String(Date.now()));
+    document.getElementById('backup-reminder').style.display = 'none';
+  }
+
+  function checkBackupReminder() {
+    const banner = document.getElementById('backup-reminder');
+    const lastRaw = localStorage.getItem('tsquare-last-backup');
+    const last = lastRaw ? parseInt(lastRaw, 10) : null;
+    const daysSince = last ? (Date.now() - last) / 86400000 : Infinity;
+
+    if (daysSince < BACKUP_REMINDER_DAYS) {
+      banner.style.display = 'none';
+      return;
+    }
+
+    const dismissedRaw = localStorage.getItem('tsquare-backup-reminder-dismissed');
+    const dismissedAt = dismissedRaw ? parseInt(dismissedRaw, 10) : 0;
+    const dismissedRecently = (Date.now() - dismissedAt) < 86400000;
+    if (dismissedRecently) {
+      banner.style.display = 'none';
+      return;
+    }
+
+    document.getElementById('backup-reminder-text').textContent = last
+      ? `ไม่ได้สำรองข้อมูลมา ${Math.floor(daysSince)} วันแล้ว — กันลืม สำรองไว้อีกครั้งไหมครับ`
+      : 'ยังไม่เคยสำรองข้อมูลเลย — ลองสำรองไว้กันข้อมูลหายกันเถอะครับ';
+    banner.style.display = 'flex';
+  }
+
   function openMigrate() {
     document.getElementById('migrate-export').value = JSON.stringify({ tasks, workoutState });
     document.getElementById('migrate-import').value = '';
@@ -1007,6 +1112,21 @@
     document.getElementById('migrate-overlay').classList.remove('open');
   }
 
+  async function shareBackupData() {
+    const text = document.getElementById('migrate-export').value;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'T-SQUARE สำรองข้อมูล', text: text });
+        markBackupDone();
+      } catch (e) {
+        // person cancelled the share sheet, or share failed — no need to show an error
+      }
+    } else {
+      // Web Share API not supported on this browser — fall back to copy
+      copyMigrateData();
+    }
+  }
+
   async function copyMigrateData() {
     const ta = document.getElementById('migrate-export');
     ta.select();
@@ -1015,11 +1135,13 @@
       await navigator.clipboard.writeText(ta.value);
       msg.textContent = 'คัดลอกแล้ว ✓';
       msg.style.display = 'block';
+      markBackupDone();
     } catch (e) {
       try {
         document.execCommand('copy');
         msg.textContent = 'คัดลอกแล้ว ✓';
         msg.style.display = 'block';
+        markBackupDone();
       } catch (e2) {
         msg.textContent = 'คัดลอกอัตโนมัติไม่ได้ — กดเลือกข้อความในกล่องแล้วคัดลอกเองนะครับ (แตะค้างแล้วเลือกทั้งหมด)';
         msg.style.display = 'block';
@@ -1081,12 +1203,40 @@
     document.getElementById('f-title').placeholder = isHabit
       ? 'เช่น ดื่มน้ำให้ครบ 2 ลิตร, อ่านหนังสือ'
       : 'เช่น การบ้านบทที่ 3, ทำแล็บรายงาน';
-    if (isHabit) applyTrackModeVisibility();
+    document.getElementById('habit-template-field').style.display = (isHabit && !editingId) ? 'block' : 'none';
+    if (isHabit) {
+      applyTrackModeVisibility();
+      applyGoalTypeVisibility();
+      if (!editingId) renderHabitTemplateRow(-1);
+    }
+  }
+
+  function renderHabitTemplateRow(activeIndex) {
+    const row = document.getElementById('habit-template-row');
+    row.innerHTML = HABIT_TEMPLATES.map((tpl, i) => `
+      <button type="button" class="habit-template-chip ${activeIndex === i ? 'active' : ''}" onclick="applyHabitTemplate(${i})">${tpl.icon} ${escapeHtml(tpl.title)}</button>
+    `).join('');
+  }
+
+  function applyHabitTemplate(index) {
+    const tpl = HABIT_TEMPLATES[index];
+    if (!tpl) return;
+    document.getElementById('f-title').value = tpl.title;
+    document.getElementById('f-track-mode').value = tpl.mode;
+    document.getElementById('f-levels').value = tpl.mode === 'levels' ? tpl.levels.join(',') : '';
+    document.getElementById('f-unit').value = tpl.mode === 'levels' ? tpl.unit : '';
+    applyTrackModeVisibility();
+    renderHabitTemplateRow(index);
   }
 
   function applyTrackModeVisibility() {
     const mode = document.getElementById('f-track-mode').value;
     document.getElementById('habit-levels-fields').style.display = mode === 'levels' ? 'grid' : 'none';
+  }
+
+  function applyGoalTypeVisibility() {
+    const type = document.getElementById('f-goal-type').value;
+    document.getElementById('habit-weekly-field').style.display = type === 'weekly' ? 'block' : 'none';
   }
 
   function openForm() {
@@ -1097,6 +1247,8 @@
     document.getElementById('f-track-mode').value = 'binary';
     document.getElementById('f-levels').value = '';
     document.getElementById('f-unit').value = '';
+    document.getElementById('f-goal-type').value = 'daily';
+    document.getElementById('f-weekly-target').value = '3';
     if (SUBJECTS[0]) selectSubject(SUBJECTS[0].code);
     applyFormTypeVisibility();
     document.getElementById('form-heading').textContent = formType === 'habit' ? 'เพิ่มนิสัยใหม่' : 'เพิ่มงานใหม่';
@@ -1122,6 +1274,8 @@
       document.getElementById('f-track-mode').value = t.trackingMode === 'levels' ? 'levels' : 'binary';
       document.getElementById('f-levels').value = (t.levels || []).join(',');
       document.getElementById('f-unit').value = t.unit || '';
+      document.getElementById('f-goal-type').value = t.goalType === 'weekly' ? 'weekly' : 'daily';
+      document.getElementById('f-weekly-target').value = t.weeklyTarget || 3;
     }
     applyFormTypeVisibility();
     document.getElementById('form-heading').textContent = formType === 'habit' ? 'แก้ไขนิสัย' : 'แก้ไขงาน';
@@ -1141,6 +1295,8 @@
     document.getElementById('f-track-mode').value = 'binary';
     document.getElementById('f-levels').value = '';
     document.getElementById('f-unit').value = '';
+    document.getElementById('f-goal-type').value = 'daily';
+    document.getElementById('f-weekly-target').value = '3';
     formSubtasks = [];
     renderSubtaskFormList();
     editingId = null;
@@ -1163,6 +1319,8 @@
         ? document.getElementById('f-levels').value.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n) && n > 0)
         : [];
       const unit = document.getElementById('f-unit').value.trim();
+      const goalType = document.getElementById('f-goal-type').value === 'weekly' ? 'weekly' : 'daily';
+      const weeklyTarget = Math.max(1, Math.min(7, parseInt(document.getElementById('f-weekly-target').value, 10) || 3));
       if (editingId) {
         const t = tasks.find(t => t.id === editingId);
         if (t) {
@@ -1171,6 +1329,8 @@
           t.trackingMode = trackingMode;
           t.levels = levels;
           t.unit = unit;
+          t.goalType = goalType;
+          t.weeklyTarget = weeklyTarget;
         }
       } else {
         tasks.push({
@@ -1181,6 +1341,8 @@
           trackingMode,
           levels,
           unit,
+          goalType,
+          weeklyTarget,
           checkins: {},
           createdAt: Date.now(),
         });
@@ -1295,6 +1457,54 @@
       if (current > longest) longest = current;
     }
     return longest;
+  }
+
+  function getWeekStart(date) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    const day = d.getDay();
+    const diff = (day === 0 ? -6 : 1) - day;
+    d.setDate(d.getDate() + diff);
+    return d;
+  }
+
+  function countThisWeek(checkinsMap) {
+    const start = getWeekStart(new Date());
+    const end = new Date(start);
+    end.setDate(end.getDate() + 7);
+    let count = 0;
+    Object.keys(checkinsMap).forEach(iso => {
+      if (checkinsMap[iso] > 0) {
+        const d = new Date(iso + 'T00:00:00');
+        if (d >= start && d < end) count++;
+      }
+    });
+    return count;
+  }
+
+  function calcWeeklyStreak(checkinsMap, target) {
+    const weekCounts = {};
+    Object.keys(checkinsMap).forEach(iso => {
+      if (checkinsMap[iso] > 0) {
+        const ws = getWeekStart(new Date(iso + 'T00:00:00'));
+        const key = toLocalISODate(ws);
+        weekCounts[key] = (weekCounts[key] || 0) + 1;
+      }
+    });
+    let cursor = getWeekStart(new Date());
+    let key = toLocalISODate(cursor);
+    if (!weekCounts[key] || weekCounts[key] < target) {
+      cursor.setDate(cursor.getDate() - 7);
+    }
+    let streak = 0;
+    while (true) {
+      key = toLocalISODate(cursor);
+      if (weekCounts[key] && weekCounts[key] >= target) {
+        streak++;
+        cursor.setDate(cursor.getDate() - 7);
+      } else break;
+    }
+    return streak;
   }
 
   function toggleHabitToday(id) {
@@ -1466,6 +1676,31 @@
     return `background-color:rgba(63,133,112,${alpha});border-color:rgba(63,133,112,${alpha});color:#fff;`;
   }
 
+  function buildMiniHeatmap(t, days) {
+    const checkins = t.checkins || {};
+    const max = habitMaxValue(t);
+    const isLevels = t.trackingMode === 'levels' && t.levels && t.levels.length > 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const cells = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const iso = toLocalISODate(d);
+      cells.push({ iso, val: checkins[iso] || 0 });
+    }
+
+    const cellsHtml = cells.map(c => {
+      const style = c.val ? intensityStyle(c.val, max) : '';
+      const clickable = !isLevels ? `onclick="toggleHabitDate('${t.id}','${c.iso}')" style="cursor:pointer;${style}"` : `style="${style}"`;
+      const title = c.val ? `${formatThaiDate(c.iso)} — ${c.val}${t.unit || ''}` : formatThaiDate(c.iso);
+      return `<div class="mini-heatmap-cell" title="${title}" ${clickable}></div>`;
+    }).join('');
+
+    return `<div class="mini-heatmap-wrap"><div class="mini-heatmap-label">${days} วันล่าสุด</div><div class="mini-heatmap-row">${cellsHtml}</div></div>`;
+  }
+
   function thaiMonthYear(date) {
     const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
     return `${months[date.getMonth()]} ${date.getFullYear() + 543}`;
@@ -1473,51 +1708,58 @@
 
   function renderHabitCard(t) {
     const checkins = t.checkins || {};
-    const streak = calcStreak(checkins);
+    const isWeekly = t.goalType === 'weekly';
+    const weeklyTarget = t.weeklyTarget || 3;
+    const streak = isWeekly ? calcWeeklyStreak(checkins, weeklyTarget) : calcStreak(checkins);
     const total = Object.keys(checkins).filter(d => checkins[d] > 0).length;
+    const thisWeekCount = countThisWeek(checkins);
     const todayIso = toLocalISODate(new Date());
-    const todayVal = checkins[todayIso] || 0;
-    const max = habitMaxValue(t);
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const yesterdayIso = toLocalISODate(yesterdayDate);
+    const target = logDayTarget[t.id] === 'today' ? 'today' : 'yesterday';
+    const targetIso = target === 'yesterday' ? yesterdayIso : todayIso;
+    const targetVal = checkins[targetIso] || 0;
     const isLevels = t.trackingMode === 'levels' && t.levels && t.levels.length > 0;
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const monthDays = [];
-    for (let day = 1; day <= daysInMonth; day++) {
-      const d = new Date(year, month, day);
-      const iso = toLocalISODate(d);
-      monthDays.push({ iso, day, val: checkins[iso] || 0 });
-    }
-
-    const controlHtml = isLevels ? `
-        <div class="habit-level-row">
-          ${t.levels.map(lv => `<button type="button" class="habit-level-btn ${todayVal === lv ? 'active' : ''}" onclick="setHabitLevel('${t.id}','${todayIso}',${lv})">${lv}${escapeHtml(t.unit || '')}</button>`).join('')}
-          <button type="button" class="habit-stats-btn" onclick="openStats('${t.id}')">📊 สถิติ</button>
-        </div>` : `
-        <div class="habit-streak-row">
-          <button type="button" class="habit-today-btn ${todayVal > 0 ? 'done' : ''}" onclick="toggleHabitToday('${t.id}')">${todayVal > 0 ? '✓ ทำวันนี้แล้ว' : 'ทำวันนี้หรือยัง'}</button>
-          <button type="button" class="habit-stats-btn" onclick="openStats('${t.id}')">📊 สถิติ</button>
+    const dayToggleHtml = `
+        <div class="habit-day-toggle">
+          <button type="button" class="${target === 'today' ? 'active' : ''}" onclick="setLogDayTarget('${t.id}','today')">วันนี้</button>
+          <button type="button" class="${target === 'yesterday' ? 'active' : ''}" onclick="setLogDayTarget('${t.id}','yesterday')">เมื่อวาน</button>
         </div>`;
 
+    const controlHtml = isLevels ? `
+        ${dayToggleHtml}
+        <div class="habit-level-row">
+          ${t.levels.map(lv => `<button type="button" class="habit-level-btn ${targetVal === lv ? 'active' : ''}" onclick="setHabitLevel('${t.id}','${targetIso}',${lv})">${lv}${escapeHtml(t.unit || '')}</button>`).join('')}
+        </div>` : `
+        ${dayToggleHtml}
+        <div class="habit-streak-row">
+          <button type="button" class="habit-today-btn ${targetVal > 0 ? 'done' : ''}" onclick="toggleHabitDate('${t.id}','${targetIso}')">${targetVal > 0 ? (target === 'yesterday' ? '✓ ทำเมื่อวานแล้ว' : '✓ ทำวันนี้แล้ว') : (target === 'yesterday' ? 'ทำเมื่อวานหรือยัง' : 'ทำวันนี้หรือยัง')}</button>
+        </div>`;
+
+    const primaryStatsHtml = isWeekly ? `
+            <div class="habit-streak-row" style="padding:6px 0 0;">
+              <div class="habit-streak-stat"><b>${thisWeekCount}/${weeklyTarget}</b>สัปดาห์นี้</div>
+              <div class="habit-streak-stat"><b>${streak}</b>สัปดาห์ติดต่อกัน</div>
+            </div>` : `
+            <div class="habit-streak-row" style="padding:6px 0 0;">
+              <div class="habit-streak-stat"><b>${streak}</b>วันติดต่อกัน</div>
+              <div class="habit-streak-stat"><b>${total}</b>ครั้งสะสม</div>
+            </div>`;
+
     return `
-      <div class="card habit-card ${deleteMode ? 'delete-mode' : ''} ${editMode ? 'edit-mode' : ''}" ${deleteMode ? `onclick="confirmDelete('${t.id}')"` : editMode ? `onclick="openEditForm('${t.id}')"` : ''}>
+      <div class="card habit-card habit-card-compact ${deleteMode ? 'delete-mode' : ''} ${editMode ? 'edit-mode' : ''}" ${deleteMode ? `onclick="confirmDelete('${t.id}')"` : editMode ? `onclick="openEditForm('${t.id}')"` : ''}>
         <div class="habit-card-body">
           <div class="habit-card-left">
             <div class="card-title">${escapeHtml(t.title)}</div>
             ${t.note ? `<div class="card-note">${escapeHtml(t.note)}</div>` : ''}
-            <div class="habit-streak-row" style="padding:6px 0 0;">
-              <div class="habit-streak-stat"><b>${streak}</b>วันติดต่อกัน</div>
-              <div class="habit-streak-stat"><b>${total}</b>ครั้งสะสม</div>
-            </div>
+            ${primaryStatsHtml}
             ${controlHtml}
+            <button type="button" class="habit-stats-btn" style="margin-top:4px;" onclick="openStats('${t.id}')">📊 สถิติ</button>
           </div>
           <div class="habit-card-right">
-            <div class="subtasks-label"><span>${thaiMonthYear(now)}</span></div>
-            <div class="month-grid">
-              ${monthDays.map(d => `<div class="day-cell month-day-cell" style="${intensityStyle(d.val, max)}" title="${d.iso}${d.val ? ' — ' + d.val + (t.unit || '') : ''}" onclick="${isLevels ? '' : `toggleHabitDate('${t.id}','${d.iso}')`}">${d.day}</div>`).join('')}
-            </div>
+            ${buildMiniHeatmap(t, 15)}
           </div>
         </div>
       </div>
@@ -1591,8 +1833,9 @@
       const style = c.val ? intensityStyle(c.val, max) : '';
       const dim = c.inRange ? '' : 'opacity:0.3;';
       const clickable = (!isLevels && c.inRange) ? `onclick="toggleHabitDate('${t.id}','${c.iso}')" style="cursor:pointer;${style}${dim}"` : `style="${style}${dim}"`;
-      const title = c.val ? `${c.iso} — ${c.val}${t.unit || ''}` : c.iso;
-      return `<div class="heatmap-cell" title="${title}" ${clickable}></div>`;
+      const title = c.val ? `${formatThaiDate(c.iso)} — ${c.val}${t.unit || ''}` : formatThaiDate(c.iso);
+      const dayNum = new Date(c.iso + 'T00:00:00').getDate();
+      return `<div class="heatmap-cell" title="${title}" ${clickable}>${dayNum}</div>`;
     }).join('');
 
     document.getElementById('heatmap-legend').innerHTML = `
@@ -1647,20 +1890,39 @@
     document.getElementById('stat-habit-today').textContent = habitTasks.filter(t => (t.checkins || {})[todayIso] > 0).length;
 
     const container = document.getElementById('task-list');
+    const summaryBar = document.getElementById('habit-summary-bar');
 
     if (activeCategory === 'workout') {
+      container.classList.remove('habit-grid');
+      summaryBar.style.display = 'none';
       document.getElementById('empty-state').style.display = 'none';
       container.innerHTML = renderWorkoutView();
       return;
     }
 
     if (activeCategory === 'habit') {
+      container.classList.add('habit-grid');
       const list = habitTasks.slice().sort((a, b) => b.createdAt - a.createdAt);
       document.getElementById('empty-state').style.display = list.length === 0 ? 'block' : 'none';
       document.getElementById('empty-state').textContent = 'ยังไม่มีนิสัยที่ติดตามอยู่ — กด "เพิ่มนิสัย" เพื่อเริ่มติดตามนิสัยแรกของคุณ';
+      if (list.length > 1) {
+        summaryBar.style.display = 'flex';
+        summaryBar.innerHTML = list.map(t => {
+          const checkins = t.checkins || {};
+          const isWeekly = t.goalType === 'weekly';
+          const streak = isWeekly ? calcWeeklyStreak(checkins, t.weeklyTarget || 3) : calcStreak(checkins);
+          const doneToday = (checkins[todayIso] || 0) > 0;
+          return `<button type="button" class="habit-summary-chip ${doneToday ? 'done' : ''}" onclick="openStats('${t.id}')"><span class="dot"></span>${escapeHtml(t.title)} <b>${streak}${isWeekly ? 'สัปดาห์' : 'วัน'}</b></button>`;
+        }).join('');
+      } else {
+        summaryBar.style.display = 'none';
+      }
       container.innerHTML = list.map(renderHabitCard).join('');
       return;
     }
+
+    container.classList.remove('habit-grid');
+    summaryBar.style.display = 'none';
 
     document.getElementById('empty-state').textContent = 'ยังไม่มีงานในสมุดตอนนี้ — กด "เพิ่มงาน" เพื่อบันทึกงานหรือการบ้านชิ้นแรก';
     let list = showSubmitted ? hwTasks.slice() : hwTasks.filter(t => !t.submitted);
@@ -1689,6 +1951,7 @@
   registerServiceWorker();
   loadWorkout();
   loadTasks();
+  checkBackupReminder();
 </script>
 </body>
 </html>
