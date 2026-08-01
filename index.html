@@ -77,6 +77,8 @@
   .editmodebtn { display:flex; align-items:center; gap:6px; background: var(--card); color: var(--teal); border: 1.5px solid var(--teal); padding: 8px 14px; border-radius: 3px; font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: inherit; }
   .editmodebtn.active { background: var(--teal); color: #fff; }
   .migratebtn { background: var(--card); color: var(--pencil); border: 1px solid var(--line-soft); padding: 6px 12px; border-radius: 3px; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
+  .last-backup-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--pencil); margin-bottom: 4px; }
+  .last-backup-label b { color: var(--teal); font-weight: 600; }
 
   .backup-reminder { max-width: 780px; margin: 0 auto 14px; background: var(--amber-soft); border: 1.5px solid var(--amber); border-radius: 4px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink); }
   .backup-reminder-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -176,23 +178,22 @@
   .day-cell.month-day-cell { width: 26px; height: 26px; aspect-ratio: unset; font-size: 9.5px; }
 
   .habit-card { border-left-color: var(--teal); }
-  .habit-card-body { display: flex; gap: 10px; padding: 12px 14px 10px; align-items: flex-start; }
-  .habit-card-left { flex: 1; min-width: 0; }
-  .habit-card-right { flex-shrink: 0; }
-  .habit-streak-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; flex-wrap: wrap; }
-  .habit-streak-stat { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--pencil); }
-  .habit-streak-stat b { display: block; font-size: 16px; color: var(--ink); font-weight: 700; }
-  .habit-today-btn { background: var(--card-warm); color: var(--teal); border: 1.5px solid var(--teal); padding: 6px 10px; border-radius: 4px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; width: 100%; }
-  .habit-today-btn.done { background: var(--teal); color: #fff; }
-  .card.delete-mode .habit-card-body, .card.edit-mode .habit-card-body { pointer-events: none; opacity: 0.4; }
+  .habit-card-body-compact { padding: 10px 12px 8px; }
+  .habit-title-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .habit-title-row .card-title { font-size: 13px; line-height: 1.3; }
+  .habit-streak-badge { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: var(--teal); flex-shrink: 0; white-space: nowrap; }
+  .card.delete-mode .habit-card-body-compact, .card.edit-mode .habit-card-body-compact { pointer-events: none; opacity: 0.4; }
 
-  .habit-level-row { display: flex; align-items: center; gap: 6px; padding: 4px 0; flex-wrap: wrap; }
-  .habit-day-toggle { display: flex; gap: 5px; padding: 6px 0 0; }
-  .habit-day-toggle button { background: var(--card-warm); border: 1.5px solid var(--line-soft); color: var(--pencil); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
-  .habit-day-toggle button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .habit-level-btn { background: var(--card-warm); color: var(--pencil); border: 1.5px solid var(--line-soft); padding: 6px 10px; border-radius: 4px; font-weight: 600; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
+  .habit-control-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .habit-day-toggle-compact { display: flex; gap: 3px; padding: 0; }
+  .habit-day-toggle-compact button { background: var(--card-warm); border: 1.5px solid var(--line-soft); color: var(--pencil); padding: 3px 7px; border-radius: 10px; font-size: 9.5px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
+  .habit-day-toggle-compact button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .habit-today-btn-compact { background: var(--card-warm); color: var(--teal); border: 1.5px solid var(--teal); padding: 3px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; margin-left: auto; }
+  .habit-today-btn-compact.done { background: var(--teal); color: #fff; }
+  .habit-level-row-compact { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+  .habit-level-btn { background: var(--card-warm); color: var(--pencil); border: 1.5px solid var(--line-soft); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
   .habit-level-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
-  .habit-stats-btn { background: none; border: none; color: var(--teal); font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; text-decoration: underline; padding: 4px 0; }
+  .habit-stats-btn-compact { background: none; border: none; color: var(--pencil); font-size: 11px; cursor: pointer; padding: 4px 0 0; margin-left: auto; display: block; }
 
   .mini-heatmap-wrap { max-width: 84px; padding-top: 2px; }
   .mini-heatmap-row { display: flex; flex-wrap: wrap; gap: 3px; }
@@ -295,6 +296,7 @@
   </div>
 
   <div style="max-width:780px;margin:0 auto 14px;text-align:right;">
+    <div id="last-backup-label" class="last-backup-label"></div>
     <button type="button" class="migratebtn" onclick="openMigrate()">⇄ ย้าย/สำรองข้อมูล</button>
   </div>
 
@@ -1076,13 +1078,17 @@
   const BACKUP_REMINDER_DAYS = 7;
 
   function updateLastBackupInfo() {
-    const el = document.getElementById('last-backup-info');
     const lastRaw = localStorage.getItem('tsquare-last-backup');
+    const el = document.getElementById('last-backup-info');
+    const label = document.getElementById('last-backup-label');
     if (!lastRaw) {
       el.textContent = 'ยังไม่เคยสำรองข้อมูลเลย';
+      label.textContent = 'ยังไม่เคยสำรองข้อมูล';
       return;
     }
-    el.innerHTML = `สำรองข้อมูลล่าสุด: <b>${formatThaiDateTime(parseInt(lastRaw, 10))}</b>`;
+    const formatted = formatThaiDateTime(parseInt(lastRaw, 10));
+    el.innerHTML = `สำรองข้อมูลล่าสุด: <b>${formatted}</b>`;
+    label.innerHTML = `สำรองล่าสุด: <b>${formatted}</b>`;
   }
 
   function markBackupDone() {
@@ -1734,7 +1740,6 @@
     const isWeekly = t.goalType === 'weekly';
     const weeklyTarget = t.weeklyTarget || 3;
     const streak = isWeekly ? calcWeeklyStreak(checkins, weeklyTarget) : calcStreak(checkins);
-    const total = Object.keys(checkins).filter(d => checkins[d] > 0).length;
     const thisWeekCount = countThisWeek(checkins);
     const todayIso = toLocalISODate(new Date());
     const yesterdayDate = new Date();
@@ -1745,45 +1750,37 @@
     const targetVal = checkins[targetIso] || 0;
     const isLevels = t.trackingMode === 'levels' && t.levels && t.levels.length > 0;
 
+    const streakBadge = isWeekly
+      ? `<span class="habit-streak-badge">🔥${thisWeekCount}/${weeklyTarget}</span>`
+      : `<span class="habit-streak-badge">🔥${streak}</span>`;
+
     const dayToggleHtml = `
-        <div class="habit-day-toggle">
+        <div class="habit-day-toggle habit-day-toggle-compact">
           <button type="button" class="${target === 'today' ? 'active' : ''}" onclick="setLogDayTarget('${t.id}','today')">วันนี้</button>
           <button type="button" class="${target === 'yesterday' ? 'active' : ''}" onclick="setLogDayTarget('${t.id}','yesterday')">เมื่อวาน</button>
         </div>`;
 
     const controlHtml = isLevels ? `
-        ${dayToggleHtml}
-        <div class="habit-level-row">
-          ${t.levels.map(lv => `<button type="button" class="habit-level-btn ${targetVal === lv ? 'active' : ''}" onclick="setHabitLevel('${t.id}','${targetIso}',${lv})">${lv}${escapeHtml(t.unit || '')}</button>`).join('')}
+        <div class="habit-control-row">
+          ${dayToggleHtml}
+          <div class="habit-level-row habit-level-row-compact">
+            ${t.levels.map(lv => `<button type="button" class="habit-level-btn ${targetVal === lv ? 'active' : ''}" onclick="setHabitLevel('${t.id}','${targetIso}',${lv})">${lv}</button>`).join('')}
+          </div>
         </div>` : `
-        ${dayToggleHtml}
-        <div class="habit-streak-row">
-          <button type="button" class="habit-today-btn ${targetVal > 0 ? 'done' : ''}" onclick="toggleHabitDate('${t.id}','${targetIso}')">${targetVal > 0 ? (target === 'yesterday' ? '✓ ทำเมื่อวานแล้ว' : '✓ ทำวันนี้แล้ว') : (target === 'yesterday' ? 'ทำเมื่อวานหรือยัง' : 'ทำวันนี้หรือยัง')}</button>
+        <div class="habit-control-row">
+          ${dayToggleHtml}
+          <button type="button" class="habit-today-btn habit-today-btn-compact ${targetVal > 0 ? 'done' : ''}" onclick="toggleHabitDate('${t.id}','${targetIso}')">${targetVal > 0 ? '✓' : 'ติ๊ก'}</button>
         </div>`;
-
-    const primaryStatsHtml = isWeekly ? `
-            <div class="habit-streak-row" style="padding:6px 0 0;">
-              <div class="habit-streak-stat"><b>${thisWeekCount}/${weeklyTarget}</b>สัปดาห์นี้</div>
-              <div class="habit-streak-stat"><b>${streak}</b>สัปดาห์ติดต่อกัน</div>
-            </div>` : `
-            <div class="habit-streak-row" style="padding:6px 0 0;">
-              <div class="habit-streak-stat"><b>${streak}</b>วันติดต่อกัน</div>
-              <div class="habit-streak-stat"><b>${total}</b>ครั้งสะสม</div>
-            </div>`;
 
     return `
       <div class="card habit-card habit-card-compact ${deleteMode ? 'delete-mode' : ''} ${editMode ? 'edit-mode' : ''}" ${deleteMode ? `onclick="confirmDelete('${t.id}')"` : editMode ? `onclick="openEditForm('${t.id}')"` : ''}>
-        <div class="habit-card-body">
-          <div class="habit-card-left">
+        <div class="habit-card-body habit-card-body-compact">
+          <div class="habit-title-row">
             <div class="card-title">${escapeHtml(t.title)}</div>
-            ${t.note ? `<div class="card-note">${escapeHtml(t.note)}</div>` : ''}
-            ${primaryStatsHtml}
-            ${controlHtml}
-            <button type="button" class="habit-stats-btn" style="margin-top:4px;" onclick="openStats('${t.id}')">📊 สถิติ</button>
+            ${streakBadge}
           </div>
-          <div class="habit-card-right">
-            ${buildMiniHeatmap(t, 15)}
-          </div>
+          ${controlHtml}
+          <button type="button" class="habit-stats-btn habit-stats-btn-compact" onclick="openStats('${t.id}')">📊</button>
         </div>
       </div>
     `;
@@ -1975,6 +1972,7 @@
   loadWorkout();
   loadTasks();
   checkBackupReminder();
+  updateLastBackupInfo();
 </script>
 </body>
 </html>
