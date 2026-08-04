@@ -718,6 +718,7 @@
     { code: "01006001", name: "ENGINEERING MATHEMATICS 1", group: "12", examType: "Midterm", date: "2026-08-17", startTime: "09:30", endTime: "12:30" },
     { code: "01006010", name: "ENGINEERING MECHANICS", group: "12", examType: "Midterm", date: "2026-08-18", startTime: "09:30", endTime: "12:30" },
     { code: "01006024", name: "GENERAL CHEMISTRY", group: "3", examType: "Midterm", date: "2026-08-20", startTime: "09:30", endTime: "12:30" },
+    { code: "01006015", name: "ENGINEERING DRAWING", group: "12", examType: "Midterm", date: "2026-08-22", startTime: "09:30", endTime: "12:30" },
     { code: "01006001", name: "ENGINEERING MATHEMATICS 1", group: "12", examType: "Final", date: "2026-10-26", startTime: "09:30", endTime: "12:30" },
     { code: "01006010", name: "ENGINEERING MECHANICS", group: "12", examType: "Final", date: "2026-10-28", startTime: "09:30", endTime: "12:30" },
     { code: "01006024", name: "GENERAL CHEMISTRY", group: "3", examType: "Final", date: "2026-10-29", startTime: "09:30", endTime: "12:30" },
@@ -1402,16 +1403,19 @@
       else if (dleft === 0) { countText = 'วันนี้!'; countClass = 'urgent'; }
       else { countText = `${dleft} วัน`; countClass = dleft <= 3 ? 'urgent' : ''; }
 
+      const timeText = (ex.startTime && ex.endTime) ? `${ex.startTime} - ${ex.endTime}` : 'ยังไม่ระบุเวลา';
+      const groupText = ex.group ? `กลุ่ม ${escapeHtml(ex.group)}` : '';
+
       return `
         <div class="exam-card">
           <div class="exam-card-left">
             <div class="exam-date">${formatThaiDateFull(ex.date)}</div>
-            <div class="exam-time">${ex.startTime} - ${ex.endTime}</div>
+            <div class="exam-time">${timeText}</div>
           </div>
           <div class="exam-card-mid">
             <span class="exam-type-badge ${typeClass}">${ex.examType}</span>
             <div class="exam-course">${ex.code} ${escapeHtml(ex.name)}</div>
-            <div class="exam-group">กลุ่ม ${escapeHtml(ex.group)}</div>
+            ${groupText ? `<div class="exam-group">${groupText}</div>` : ''}
           </div>
           <div class="exam-card-right ${countClass}">
             <b>${countText}</b>
