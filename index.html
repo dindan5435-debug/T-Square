@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>T-SQUARE — สมุดงาน & นิสัย</title>
-<meta name="theme-color" content="#F2EFE5" />
+<meta name="theme-color" content="#EAF1FB" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -16,16 +16,16 @@
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 
   :root {
-    --bg: #F2EFE5;
-    --bg-line: rgba(122,145,118,0.14);
+    --bg: #EAF1FB;
+    --bg-line: rgba(58,100,163,0.12);
     --card: #FFFFFF;
-    --card-warm: #F6F2E7;
-    --ink: #333A2E;
-    --pencil: #7C8574;
-    --line: #7E9A82;
-    --line-soft: #C8D3C2;
-    --teal: #3F8570;
-    --teal-soft: rgba(63,133,112,0.12);
+    --card-warm: #E7EFFA;
+    --ink: #17263D;
+    --pencil: #5C7291;
+    --line: #4B78B5;
+    --line-soft: #C3D6EF;
+    --teal: #2C5FA8;
+    --teal-soft: rgba(44,95,168,0.12);
     --amber: #C98A3D;
     --amber-soft: rgba(201,138,61,0.13);
   }
@@ -43,6 +43,31 @@
     padding: 20px 14px 60px;
   }
   .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .grad-banner {
+    max-width: 780px;
+    margin: 0 auto 14px;
+    background: linear-gradient(135deg, var(--teal), #1E4A87);
+    color: #fff;
+    text-align: center;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(44,95,168,0.25);
+  }
+  .grad-banner b {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--amber);
+    padding: 0 3px;
+  }
+  .grad-banner .grad-note {
+    font-size: 10.5px;
+    font-weight: 500;
+    opacity: 0.8;
+  }
 
   .header {
     max-width: 780px;
@@ -102,7 +127,6 @@
   .card.delete-mode .checks, .card.delete-mode .subtasks { pointer-events: none; opacity: 0.4; }
 
   .list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-  .list.habit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: start; }
   .empty { max-width: 780px; margin: 40px auto; text-align: center; border: 1.5px dashed var(--line-soft); border-radius: 4px; padding: 40px 20px; color: var(--pencil); }
   .saveerror { max-width: 780px; margin: 0 auto 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--amber); text-align: center; display:none; }
 
@@ -131,6 +155,12 @@
   .stamp { position: absolute; top: 10px; right: 14px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 3px; transform: rotate(6deg); }
   .stamp.done-stamp { border: 2px solid var(--teal); color: var(--teal); background: var(--teal-soft); }
   .stamp.wait-stamp { border: 2px solid var(--amber); color: var(--amber); background: var(--amber-soft); }
+  .due-corner-badge { position: absolute; top: 8px; right: 10px; text-align: center; background: var(--teal-soft); border: 1.5px solid var(--teal); border-radius: 6px; padding: 4px 9px; line-height: 1.1; }
+  .due-corner-badge b { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 800; color: var(--teal); }
+  .due-corner-badge span { display: block; font-size: 8px; color: var(--teal); font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+  .due-corner-badge.urgent { background: var(--amber-soft); border-color: var(--amber); }
+  .due-corner-badge.urgent b, .due-corner-badge.urgent span { color: var(--amber); }
+  .card-main.has-corner-badge { padding-right: 64px; }
 
   .form-overlay { position: fixed; inset: 0; background: rgba(51,58,46,0.45); display: none; align-items: flex-start; justify-content: center; padding: 40px 14px; z-index: 50; overflow-y: auto; }
   .form-overlay.open { display: flex; }
@@ -174,34 +204,6 @@
   .day-cell.done { background: var(--teal); border-color: var(--teal); color: #fff; }
   .day-cell:active { opacity: 0.7; }
 
-  .month-grid { display: grid; grid-template-columns: repeat(7, 26px); gap: 4px; }
-  .day-cell.month-day-cell { width: 26px; height: 26px; aspect-ratio: unset; font-size: 9.5px; }
-
-  .habit-card { border-left-color: var(--teal); }
-  .habit-card-body-compact { padding: 10px 12px 8px; }
-  .habit-title-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-  .habit-title-row .card-title { font-size: 13px; line-height: 1.3; }
-  .habit-streak-badge { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: var(--teal); flex-shrink: 0; white-space: nowrap; }
-  .card.delete-mode .habit-card-body-compact, .card.edit-mode .habit-card-body-compact { pointer-events: none; opacity: 0.4; }
-
-  .habit-control-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-  .habit-day-toggle-compact { display: flex; gap: 3px; padding: 0; }
-  .habit-day-toggle-compact button { background: var(--card-warm); border: 1.5px solid var(--line-soft); color: var(--pencil); padding: 3px 7px; border-radius: 10px; font-size: 9.5px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
-  .habit-day-toggle-compact button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .habit-today-btn-compact { background: var(--card-warm); color: var(--teal); border: 1.5px solid var(--teal); padding: 3px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; margin-left: auto; }
-  .habit-today-btn-compact.done { background: var(--teal); color: #fff; }
-  .habit-level-row-compact { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
-  .habit-level-btn { background: var(--card-warm); color: var(--pencil); border: 1.5px solid var(--line-soft); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; }
-  .habit-level-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
-  .habit-stats-btn-compact { background: none; border: none; color: var(--pencil); font-size: 11px; cursor: pointer; padding: 4px 0 0; margin-left: auto; display: block; }
-
-  .mini-heatmap-wrap { max-width: 84px; padding-top: 2px; }
-  .mini-heatmap-row { display: flex; flex-wrap: wrap; gap: 3px; }
-  .mini-heatmap-cell { width: 14px; height: 14px; border-radius: 3px; background: var(--card-warm); border: 1.5px solid var(--line-soft); box-sizing: border-box; flex-shrink: 0; }
-  .mini-heatmap-label { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; color: var(--pencil); text-align: right; margin-bottom: 3px; }
-
-  .stats-box { max-width: 560px; }
-
   .subject-trigger { width: 100%; text-align: left; border: 1.5px solid var(--line-soft); border-radius: 3px; padding: 7px 9px; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 13px; background: #fff; color: var(--ink); cursor: pointer; }
   .subject-trigger.has-value { font-weight: 600; }
   .subject-picker-box { max-width: 480px; max-height: 80vh; display: flex; flex-direction: column; }
@@ -213,15 +215,20 @@
   .subject-picker-item .code { font-family: 'IBM Plex Mono', monospace; font-size: 11px; opacity: 0.75; margin-right: 4px; }
   .subject-picker-empty { text-align: center; color: var(--pencil); font-size: 13px; padding: 20px; }
 
-  .habit-template-row { display: flex; gap: 6px; flex-wrap: wrap; }
-  .habit-template-chip { background: var(--card-warm); border: 1.5px solid var(--line-soft); border-radius: 6px; padding: 6px 10px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'IBM Plex Sans Thai', sans-serif; color: var(--ink); display: flex; align-items: center; gap: 4px; }
-  .habit-template-chip.active { background: var(--teal); color: #fff; border-color: var(--teal); }
-
-  .habit-summary-bar { max-width: 780px; margin: 0 auto 14px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
-  .habit-summary-chip { flex-shrink: 0; background: var(--card); border: 1.5px solid var(--line-soft); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-  .habit-summary-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-soft); flex-shrink: 0; }
-  .habit-summary-chip.done .dot { background: var(--teal); }
-  .habit-summary-chip b { font-family: 'IBM Plex Mono', monospace; color: var(--teal); }
+  .exam-card { background: var(--card); border-radius: 4px; box-shadow: 0 2px 8px rgba(80,70,50,0.08); margin-bottom: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .exam-card-left { flex-shrink: 0; min-width: 140px; }
+  .exam-date { font-weight: 700; font-size: 13.5px; color: var(--ink); }
+  .exam-time { font-size: 11.5px; color: var(--pencil); margin-top: 1px; }
+  .exam-card-mid { flex: 1; min-width: 160px; }
+  .exam-type-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-bottom: 4px; }
+  .exam-type-badge.midterm { background: var(--amber-soft); color: var(--amber); }
+  .exam-type-badge.final { background: var(--teal-soft); color: var(--teal); }
+  .exam-course { font-weight: 600; font-size: 13px; color: var(--ink); line-height: 1.3; }
+  .exam-group { font-size: 11px; color: var(--pencil); margin-top: 2px; }
+  .exam-card-right { flex-shrink: 0; text-align: right; font-family: 'IBM Plex Mono', monospace; }
+  .exam-card-right b { font-size: 17px; font-weight: 800; color: var(--teal); white-space: nowrap; }
+  .exam-card-right.urgent b { color: var(--amber); }
+  .exam-card-right.past b { color: var(--pencil); font-size: 13px; }
 
   .workout-day-card { background: var(--card); border-radius: 4px; border-left: 5px solid var(--amber); box-shadow: 0 2px 8px rgba(80,70,50,0.08); margin-bottom: 14px; }
   .workout-day-title { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; padding: 12px 16px 8px; color: var(--ink); }
@@ -239,16 +246,6 @@
   .workout-weight-row { display: flex; gap: 6px; }
   .workout-weight-row input { flex: 1; min-width: 0; border: 1.5px solid var(--line-soft); border-radius: 3px; padding: 6px 8px; font-size: 13px; background: #fff; color: var(--ink); }
   .workout-weight-row select { border: 1.5px solid var(--line-soft); border-radius: 3px; padding: 6px 6px; font-size: 12.5px; background: #fff; color: var(--ink); }
-  .stats-period-tabs { display: flex; gap: 6px; margin-bottom: 14px; }
-  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
-  .stat-card { background: var(--card-warm); border-radius: 4px; padding: 8px 12px; }
-  .stat-card-label { font-size: 10.5px; color: var(--pencil); font-family: 'IBM Plex Mono', monospace; }
-  .stat-card-val { font-size: 19px; font-weight: 700; color: var(--ink); }
-  .heatmap-wrap { overflow-x: auto; padding-bottom: 4px; }
-  .heatmap-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 18px); gap: 3px; width: max-content; }
-  .heatmap-cell { width: 18px; height: 18px; border-radius: 3px; background: var(--card-warm); border: 1.5px solid var(--line-soft); box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; font-weight: 600; color: var(--pencil); }
-  .heatmap-legend { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 10px; color: var(--pencil); font-family: 'IBM Plex Mono', monospace; }
-  .heatmap-legend .heatmap-cell { width: 10px; height: 10px; }
 
   .formerror { color: var(--amber); font-size: 12px; margin: -6px 0 10px; display:none; }
   .submitbtn { width: 100%; background: var(--amber); color: #fff; border: none; padding: 10px; border-radius: 3px; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 4px; }
@@ -266,15 +263,19 @@
 </head>
 <body>
 
+  <div class="grad-banner">
+    🎓 อีก <b id="grad-days">–</b> วัน จะเรียนจบ <span class="grad-note">(ประมาณ)</span>
+  </div>
+
   <div class="header">
     <div class="logo">
       <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-        <path d="M4 4 V30 H30" stroke="#3F8570" stroke-width="2.5" stroke-linecap="round" />
-        <path d="M4 4 L30 30" stroke="#7E9A82" stroke-width="1.5" stroke-dasharray="2 3" />
+        <path d="M4 4 V30 H30" stroke="#2C5FA8" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M4 4 L30 30" stroke="#4B78B5" stroke-width="1.5" stroke-dasharray="2 3" />
       </svg>
       <div>
         <div class="title">T-SQUARE</div>
-        <div class="subtitle">สมุดงาน & นิสัย — 69010181</div>
+        <div class="subtitle">สมุดงาน & ออกกำลังกาย — 69010181</div>
       </div>
     </div>
     <div class="stats" id="hw-stats">
@@ -283,15 +284,11 @@
       <div id="stat-overdue-wrap"><b id="stat-overdue">0</b>เลยกำหนด</div>
       <div><b id="stat-total">0</b>ทั้งหมด</div>
     </div>
-    <div class="stats" id="habit-stats" style="display:none;">
-      <div><b id="stat-habit-total">0</b>นิสัยที่ติดตาม</div>
-      <div class="wait"><b id="stat-habit-today">0</b>ทำวันนี้แล้ว</div>
-    </div>
   </div>
 
   <div class="cat-tabs">
     <button class="cat-tab active" id="cat-tab-homework" onclick="setCategory('homework')">📚 การบ้าน</button>
-    <button class="cat-tab" id="cat-tab-habit" onclick="setCategory('habit')">🔁 นิสัยที่อยากทำ</button>
+    <button class="cat-tab" id="cat-tab-exam" onclick="setCategory('exam')">📝 ตารางสอบ</button>
     <button class="cat-tab" id="cat-tab-workout" onclick="setCategory('workout')">🏋️ ออกกำลังกาย</button>
   </div>
 
@@ -364,28 +361,6 @@
     </div>
   </div>
 
-  <div class="form-overlay" id="stats-overlay" onclick="if(event.target.id==='stats-overlay')closeStats()">
-    <div class="formbox stats-box" onclick="event.stopPropagation()">
-      <h3>
-        <span id="stats-title">สถิตินิสัย</span>
-        <button type="button" class="closebtn" onclick="closeStats()">&times;</button>
-      </h3>
-
-      <div class="stats-period-tabs">
-        <button type="button" class="chip active" id="stats-period-all" onclick="setStatsPeriod('all')">ทั้งหมด</button>
-        <button type="button" class="chip" id="stats-period-30" onclick="setStatsPeriod('30')">30 วัน</button>
-        <button type="button" class="chip" id="stats-period-7" onclick="setStatsPeriod('7')">7 วัน</button>
-      </div>
-
-      <div class="stats-grid" id="stats-cards"></div>
-
-      <div class="heatmap-wrap">
-        <div id="heatmap-grid" class="heatmap-grid"></div>
-        <div class="heatmap-legend" id="heatmap-legend"></div>
-      </div>
-    </div>
-  </div>
-
   <div class="form-overlay" id="subject-picker-overlay" onclick="if(event.target.id==='subject-picker-overlay')closeSubjectPicker()">
     <div class="formbox subject-picker-box" onclick="event.stopPropagation()">
       <h3>
@@ -398,8 +373,6 @@
   </div>
 
   <div class="empty" id="empty-state" style="display:none;">ยังไม่มีงานในสมุดตอนนี้ — กด “เพิ่มงาน” เพื่อบันทึกงานหรือการบ้านชิ้นแรก</div>
-
-  <div class="habit-summary-bar" id="habit-summary-bar" style="display:none;"></div>
 
   <div class="list" id="task-list"></div>
 
@@ -435,43 +408,6 @@
               <option value="สำคัญมาก">สำคัญมาก</option>
             </select>
           </div>
-        </div>
-      </div>
-
-      <div id="habit-only-fields" style="display:none;">
-        <div class="field" id="habit-template-field">
-          <label>เลือกจากแบบสำเร็จรูป (หรือกำหนดเองด้านล่าง)</label>
-          <div class="habit-template-row" id="habit-template-row"></div>
-        </div>
-
-        <div class="field">
-          <label>วิธีติดตาม</label>
-          <select id="f-track-mode" onchange="applyTrackModeVisibility()">
-            <option value="binary">ติ๊กว่าทำ/ไม่ทำ</option>
-            <option value="levels">กำหนดระดับจำนวน (เช่น อ่านกี่หน้า)</option>
-          </select>
-        </div>
-        <div class="row2" id="habit-levels-fields" style="display:none;">
-          <div class="field">
-            <label>ระดับที่เลือกได้ (คั่นด้วยจุลภาค)</label>
-            <input type="text" id="f-levels" placeholder="เช่น 5,10,15" />
-          </div>
-          <div class="field">
-            <label>หน่วย</label>
-            <input type="text" id="f-unit" placeholder="เช่น หน้า, นาที, แก้ว" />
-          </div>
-        </div>
-
-        <div class="field">
-          <label>ความถี่เป้าหมาย</label>
-          <select id="f-goal-type" onchange="applyGoalTypeVisibility()">
-            <option value="daily">ทุกวัน</option>
-            <option value="weekly">รายสัปดาห์ (กำหนดจำนวนครั้ง)</option>
-          </select>
-        </div>
-        <div class="field" id="habit-weekly-field" style="display:none;">
-          <label>จำนวนครั้งต่อสัปดาห์</label>
-          <input type="number" id="f-weekly-target" min="1" max="7" value="3" />
         </div>
       </div>
 
@@ -636,41 +572,72 @@
     "วิชาเลือก ME — วัสดุและกลศาสตร์": { bg: "#EDEAF7", text: "#4A3B7A" },
   };
   function groupColor(group) {
-    return GROUP_COLORS[group] || { bg: "#E4ECF3", text: "#333A2E" };
+    return GROUP_COLORS[group] || { bg: "#E4ECF3", text: "#17263D" };
   }
 
   const WORKOUT_STORAGE_KEY = "tsquare-workout-v1";
   const WORKOUT_DAYS = [
     {
-      id: "A",
-      label: "Day A",
+      id: "UA",
+      label: "Day 1 – Upper A (Strength)",
       exercises: [
-        { id: "A1", name: "Squat (บาร์เบล/ดัมเบล)", reps: "8-10",
+        { id: "UA1", name: "Bench Press", reps: "6-8", sets: 4,
           alternatives: [
-            { name: "Leg Press", reps: "10-12" },
+            { name: "Machine Chest Press", reps: "6-8" },
+            { name: "Weighted Push-up", reps: "6-8" },
+          ] },
+        { id: "UA2", name: "Bent-over Row", reps: "6-8", sets: 4,
+          alternatives: [
+            { name: "Seated Cable Row", reps: "6-8" },
+            { name: "T-Bar Row", reps: "6-8" },
+          ] },
+        { id: "UA3", name: "Overhead Press", reps: "8-10", sets: 3,
+          alternatives: [
+            { name: "Dumbbell Shoulder Press", reps: "8-10" },
+            { name: "Machine Shoulder Press", reps: "8-10" },
+          ] },
+        { id: "UA4", name: "Lat Pulldown / Pull-up", reps: "8-10", sets: 3,
+          alternatives: [
+            { name: "Assisted Pull-up", reps: "8-10" },
+            { name: "Cable Pulldown", reps: "8-10" },
+          ] },
+        { id: "UA5", name: "Bicep Curl", reps: "10-12", sets: 2,
+          alternatives: [
+            { name: "Hammer Curl", reps: "10-12" },
+            { name: "Cable Curl", reps: "10-12" },
+          ] },
+        { id: "UA6", name: "Triceps Pushdown", reps: "10-12", sets: 2,
+          alternatives: [
+            { name: "Overhead Triceps Extension", reps: "10-12" },
+            { name: "Skull Crusher", reps: "10-12" },
+          ] },
+      ],
+    },
+    {
+      id: "LA",
+      label: "Day 2 – Lower A",
+      exercises: [
+        { id: "LA1", name: "Squat", reps: "6-8", sets: 4,
+          alternatives: [
+            { name: "Leg Press", reps: "6-8" },
+            { name: "Goblet Squat", reps: "6-8" },
+          ] },
+        { id: "LA2", name: "Romanian Deadlift", reps: "8-10", sets: 3,
+          alternatives: [
+            { name: "Leg Curl", reps: "10-12" },
+            { name: "Good Morning", reps: "8-10" },
+          ] },
+        { id: "LA3", name: "Leg Press", reps: "10-12", sets: 3,
+          alternatives: [
+            { name: "Hack Squat", reps: "10-12" },
             { name: "Goblet Squat", reps: "10-12" },
           ] },
-        { id: "A2", name: "Bench Press หรือ Push-up ถ่วงน้ำหนัก", reps: "8-10",
+        { id: "LA4", name: "Calf Raise", reps: "15", sets: 3,
           alternatives: [
-            { name: "Dumbbell Chest Press", reps: "8-10" },
-            { name: "Machine Chest Press", reps: "10-12" },
+            { name: "Seated Calf Raise", reps: "15" },
+            { name: "Leg Press Calf Raise", reps: "15" },
           ] },
-        { id: "A3", name: "Bent-over Row", reps: "8-10",
-          alternatives: [
-            { name: "Seated Cable Row", reps: "8-10" },
-            { name: "Chest-Supported Row", reps: "8-10" },
-          ] },
-        { id: "A4", name: "Overhead Press", reps: "10-12",
-          alternatives: [
-            { name: "Dumbbell Shoulder Press", reps: "10-12" },
-            { name: "Machine Shoulder Press", reps: "10-12" },
-          ] },
-        { id: "A5", name: "Romanian Deadlift", reps: "10-12",
-          alternatives: [
-            { name: "Leg Curl", reps: "12-15" },
-            { name: "Good Morning", reps: "10-12" },
-          ] },
-        { id: "A6", name: "Plank", reps: "30-45 วิ",
+        { id: "LA5", name: "Plank", reps: "30-45 วิ", sets: 3,
           alternatives: [
             { name: "Ab Wheel Rollout", reps: "8-12" },
             { name: "Cable Crunch", reps: "12-15" },
@@ -678,51 +645,86 @@
       ],
     },
     {
-      id: "B",
-      label: "Day B",
+      id: "UB",
+      label: "Day 4 – Upper B (Hypertrophy)",
       exercises: [
-        { id: "B1", name: "Deadlift", reps: "6-8",
-          alternatives: [
-            { name: "Trap Bar Deadlift", reps: "6-8" },
-            { name: "Leg Press (หนัก)", reps: "8-10" },
-          ] },
-        { id: "B2", name: "Incline Press (ดัมเบล)", reps: "8-10",
+        { id: "UB1", name: "Incline DB Press", reps: "8-10", sets: 4,
           alternatives: [
             { name: "Incline Machine Press", reps: "8-10" },
             { name: "Incline Push-up", reps: "10-15" },
           ] },
-        { id: "B3", name: "Pull-up/Lat Pulldown", reps: "8-10",
+        { id: "UB2", name: "Seated Cable Row", reps: "8-10", sets: 4,
           alternatives: [
-            { name: "Assisted Pull-up", reps: "8-10" },
-            { name: "Cable Pulldown", reps: "8-10" },
+            { name: "Bent-over Row", reps: "8-10" },
+            { name: "Chest-Supported Row", reps: "8-10" },
           ] },
-        { id: "B4", name: "Bulgarian Split Squat", reps: "10-12/ข้าง",
-          alternatives: [
-            { name: "Walking Lunge", reps: "10-12/ข้าง" },
-            { name: "Leg Press ขาเดียว", reps: "10-12/ข้าง" },
-          ] },
-        { id: "B5", name: "Dumbbell Shoulder Lateral Raise", reps: "12-15",
+        { id: "UB3", name: "Lateral Raise", reps: "12-15", sets: 3,
           alternatives: [
             { name: "Cable Lateral Raise", reps: "12-15" },
             { name: "Machine Lateral Raise", reps: "12-15" },
           ] },
-        { id: "B6", name: "Hanging Leg Raise", reps: "12-15",
+        { id: "UB4", name: "Face Pull", reps: "12-15", sets: 3,
           alternatives: [
-            { name: "Lying Leg Raise", reps: "12-15" },
-            { name: "Captain's Chair Knee Raise", reps: "12-15" },
+            { name: "Reverse Pec Deck", reps: "12-15" },
+            { name: "Band Pull-apart", reps: "15-20" },
+          ] },
+        { id: "UB5", name: "Hammer Curl", reps: "10-12", sets: 2,
+          alternatives: [
+            { name: "Bicep Curl", reps: "10-12" },
+            { name: "Cable Curl", reps: "10-12" },
+          ] },
+        { id: "UB6", name: "Overhead Triceps Extension", reps: "10-12", sets: 2,
+          alternatives: [
+            { name: "Triceps Pushdown", reps: "10-12" },
+            { name: "Skull Crusher", reps: "10-12" },
+          ] },
+      ],
+    },
+    {
+      id: "LB",
+      label: "Day 5 – Lower B",
+      exercises: [
+        { id: "LB1", name: "Deadlift", reps: "5-6", sets: 4,
+          alternatives: [
+            { name: "Trap Bar Deadlift", reps: "5-6" },
+            { name: "Rack Pull", reps: "5-6" },
+          ] },
+        { id: "LB2", name: "Bulgarian Split Squat", reps: "8-10/ข้าง", sets: 3,
+          alternatives: [
+            { name: "Walking Lunge", reps: "8-10/ข้าง" },
+            { name: "Leg Press ขาเดียว", reps: "8-10/ข้าง" },
+          ] },
+        { id: "LB3", name: "Leg Curl", reps: "10-12", sets: 3,
+          alternatives: [
+            { name: "Romanian Deadlift", reps: "10-12" },
+            { name: "Nordic Curl", reps: "8-10" },
+          ] },
+        { id: "LB4", name: "Hip Thrust", reps: "10-12", sets: 3,
+          alternatives: [
+            { name: "Glute Bridge", reps: "12-15" },
+            { name: "Cable Pull-through", reps: "12-15" },
+          ] },
+        { id: "LB5", name: "Calf Raise", reps: "15", sets: 3,
+          alternatives: [
+            { name: "Seated Calf Raise", reps: "15" },
+            { name: "Leg Press Calf Raise", reps: "15" },
           ] },
       ],
     },
   ];
   let workoutState = {}; // { [exerciseId]: { variant: 0, sets: 3, weight: '', unit: 'kg' } }
 
-  const HABIT_TEMPLATES = [
-    { icon: "💧", title: "ดื่มน้ำให้พอ", mode: "levels", levels: [4, 6, 8], unit: "แก้ว" },
-    { icon: "📖", title: "อ่านหนังสือ", mode: "levels", levels: [5, 10, 15], unit: "หน้า" },
-    { icon: "🧘", title: "ทำสมาธิ", mode: "levels", levels: [5, 10, 15], unit: "นาที" },
-    { icon: "🏃", title: "ออกกำลังกาย", mode: "binary" },
-    { icon: "🌙", title: "นอนก่อน 5 ทุ่ม", mode: "binary" },
-    { icon: "🥦", title: "กินผัก/ผลไม้", mode: "levels", levels: [1, 2, 3], unit: "มื้อ" },
+  const EXAMS = [
+    { code: "01006001", name: "ENGINEERING MATHEMATICS 1", group: "12", examType: "Midterm", date: "2026-08-17", startTime: "09:30", endTime: "12:30" },
+    { code: "01006010", name: "ENGINEERING MECHANICS", group: "12", examType: "Midterm", date: "2026-08-18", startTime: "09:30", endTime: "12:30" },
+    { code: "01006024", name: "GENERAL CHEMISTRY", group: "3", examType: "Midterm", date: "2026-08-20", startTime: "09:30", endTime: "12:30" },
+    { code: "01006001", name: "ENGINEERING MATHEMATICS 1", group: "12", examType: "Final", date: "2026-10-26", startTime: "09:30", endTime: "12:30" },
+    { code: "01006010", name: "ENGINEERING MECHANICS", group: "12", examType: "Final", date: "2026-10-28", startTime: "09:30", endTime: "12:30" },
+    { code: "01006024", name: "GENERAL CHEMISTRY", group: "3", examType: "Final", date: "2026-10-29", startTime: "09:30", endTime: "12:30" },
+    { code: "01006021", name: "GENERAL PHYSICS LABORATORY 1", group: "10", examType: "Final", date: "2026-11-06", startTime: "09:30", endTime: "11:30" },
+    { code: "90642118", name: "APPLICATION SOFTWARE FOR BUSINESS", group: "3", examType: "Final", date: "2026-11-06", startTime: "13:30", endTime: "16:30" },
+    { code: "90642118", name: "APPLICATION SOFTWARE FOR BUSINESS", group: "301", examType: "Final", date: "2026-11-06", startTime: "13:30", endTime: "16:30" },
+    { code: "90644007", name: "FOUNDATION ENGLISH 1", group: "982", examType: "Final", date: null, note: "จัดสอบเอง" },
   ];
 
   let tasks = [];
@@ -735,25 +737,16 @@
   let expandedCards = new Set();
   let activeCategory = "homework";
   let formType = "homework";
-  let statsHabitId = null;
-  let logDayTarget = {}; // { [habitId]: 'today' | 'yesterday' } — which day the quick-log controls act on
-
-  function setLogDayTarget(habitId, which) {
-    logDayTarget[habitId] = which;
-    render();
-  }
-  let statsPeriod = "all";
 
   function setCategory(cat) {
     activeCategory = cat;
     document.getElementById('cat-tab-homework').classList.toggle('active', cat === 'homework');
-    document.getElementById('cat-tab-habit').classList.toggle('active', cat === 'habit');
+    document.getElementById('cat-tab-exam').classList.toggle('active', cat === 'exam');
     document.getElementById('cat-tab-workout').classList.toggle('active', cat === 'workout');
     document.getElementById('hw-toolbar-extra').style.display = cat === 'homework' ? 'flex' : 'none';
     document.getElementById('hw-stats').style.display = cat === 'homework' ? 'flex' : 'none';
-    document.getElementById('habit-stats').style.display = cat === 'habit' ? 'flex' : 'none';
-    document.getElementById('main-action-btns').style.display = cat === 'workout' ? 'none' : 'flex';
-    document.getElementById('add-btn').textContent = cat === 'homework' ? '+ เพิ่มงาน' : '+ เพิ่มนิสัย';
+    document.getElementById('main-action-btns').style.display = cat === 'homework' ? 'flex' : 'none';
+    document.getElementById('add-btn').textContent = '+ เพิ่มงาน';
     if (deleteMode) toggleDeleteMode();
     if (editMode) toggleEditMode();
     render();
@@ -892,6 +885,14 @@
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
   }
 
+  function formatThaiDateFull(dateStr) {
+    if (!dateStr) return "ไม่ระบุ";
+    const d = new Date(dateStr + "T00:00:00");
+    const days = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
+    const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+    return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
+  }
+
   function formatThaiDateTime(timestamp) {
     const d = new Date(timestamp);
     const months = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
@@ -910,6 +911,22 @@
     return `${y}-${m}-${day}`;
   }
 
+  // Estimated graduation: KMITL ME curriculum is 4 years / 8 semesters.
+  // Semester 1 started 29 Jun 2026, so Year 4 Semester 2 is expected to
+  // wrap up around March–April 2030 (Thai academic-year pattern). This
+  // is an ESTIMATE — actual date depends on the published academic
+  // calendar and personal course progress.
+  const GRADUATION_TARGET_DATE = "2030-03-31";
+
+  function updateGradBanner() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const target = new Date(GRADUATION_TARGET_DATE + "T00:00:00");
+    const daysLeft = Math.round((target - today) / 86400000);
+    const el = document.getElementById('grad-days');
+    if (el) el.textContent = daysLeft > 0 ? daysLeft.toLocaleString('th-TH') : '0';
+  }
+
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   }
@@ -926,18 +943,6 @@
     el.style.display = 'block';
   }
 
-  function migrateHabitCheckins(list) {
-    list.forEach(t => {
-      if (t.type === 'habit' && Array.isArray(t.checkins)) {
-        const map = {};
-        t.checkins.forEach(d => { map[d] = 1; });
-        t.checkins = map;
-      }
-      if (t.type === 'habit' && !t.checkins) t.checkins = {};
-    });
-    return list;
-  }
-
   function loadTasks() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -945,13 +950,11 @@
     } catch (e) {
       showSaveError('เปิดอ่านข้อมูลที่บันทึกไว้ไม่ได้ (' + ((e && e.message) || e) + ')');
     }
-    migrateHabitCheckins(tasks);
     render();
   }
 
   function persist() {
     render();
-    if (statsHabitId) renderStatsContent();
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
       document.getElementById('save-error').style.display = 'none';
@@ -960,9 +963,18 @@
     }
   }
 
+  function findExerciseDef(exerciseId) {
+    for (const day of WORKOUT_DAYS) {
+      const ex = day.exercises.find(e => e.id === exerciseId);
+      if (ex) return ex;
+    }
+    return null;
+  }
+
   function getSlotState(exerciseId) {
     if (!workoutState[exerciseId]) {
-      workoutState[exerciseId] = { variant: 0, sets: 3, weight: '', unit: 'kg' };
+      const def = findExerciseDef(exerciseId);
+      workoutState[exerciseId] = { variant: 0, sets: (def && def.sets) || 3, weight: '', unit: 'kg' };
     }
     return workoutState[exerciseId];
   }
@@ -1217,71 +1229,25 @@
       tasks = tasks.concat(newOnes);
       if (incomingWorkout) workoutState = Object.assign({}, incomingWorkout, workoutState);
     }
-    migrateHabitCheckins(tasks);
     persist();
     persistWorkout();
     closeMigrate();
   }
 
   function applyFormTypeVisibility() {
-    const isHabit = formType === 'habit';
-    document.getElementById('hw-only-fields').style.display = isHabit ? 'none' : 'block';
-    document.getElementById('hw-only-subtasks').style.display = isHabit ? 'none' : 'block';
-    document.getElementById('habit-only-fields').style.display = isHabit ? 'block' : 'none';
-    document.getElementById('f-title-label').textContent = isHabit ? 'ชื่อนิสัย' : 'ชื่องาน';
-    document.getElementById('f-title').placeholder = isHabit
-      ? 'เช่น ดื่มน้ำให้ครบ 2 ลิตร, อ่านหนังสือ'
-      : 'เช่น การบ้านบทที่ 3, ทำแล็บรายงาน';
-    document.getElementById('habit-template-field').style.display = (isHabit && !editingId) ? 'block' : 'none';
-    if (isHabit) {
-      applyTrackModeVisibility();
-      applyGoalTypeVisibility();
-      if (!editingId) renderHabitTemplateRow(-1);
-    }
-  }
-
-  function renderHabitTemplateRow(activeIndex) {
-    const row = document.getElementById('habit-template-row');
-    row.innerHTML = HABIT_TEMPLATES.map((tpl, i) => `
-      <button type="button" class="habit-template-chip ${activeIndex === i ? 'active' : ''}" onclick="applyHabitTemplate(${i})">${tpl.icon} ${escapeHtml(tpl.title)}</button>
-    `).join('');
-  }
-
-  function applyHabitTemplate(index) {
-    const tpl = HABIT_TEMPLATES[index];
-    if (!tpl) return;
-    document.getElementById('f-title').value = tpl.title;
-    document.getElementById('f-track-mode').value = tpl.mode;
-    document.getElementById('f-levels').value = tpl.mode === 'levels' ? tpl.levels.join(',') : '';
-    document.getElementById('f-unit').value = tpl.mode === 'levels' ? tpl.unit : '';
-    applyTrackModeVisibility();
-    renderHabitTemplateRow(index);
-  }
-
-  function applyTrackModeVisibility() {
-    const mode = document.getElementById('f-track-mode').value;
-    document.getElementById('habit-levels-fields').style.display = mode === 'levels' ? 'grid' : 'none';
-  }
-
-  function applyGoalTypeVisibility() {
-    const type = document.getElementById('f-goal-type').value;
-    document.getElementById('habit-weekly-field').style.display = type === 'weekly' ? 'block' : 'none';
+    document.getElementById('f-title-label').textContent = 'ชื่องาน';
+    document.getElementById('f-title').placeholder = 'เช่น การบ้านบทที่ 3, ทำแล็บรายงาน';
   }
 
   function openForm() {
     editingId = null;
-    formType = activeCategory;
+    formType = 'homework';
     formSubtasks = [];
     renderSubtaskFormList();
-    document.getElementById('f-track-mode').value = 'binary';
-    document.getElementById('f-levels').value = '';
-    document.getElementById('f-unit').value = '';
-    document.getElementById('f-goal-type').value = 'daily';
-    document.getElementById('f-weekly-target').value = '3';
     if (SUBJECTS[0]) selectSubject(SUBJECTS[0].code);
     applyFormTypeVisibility();
-    document.getElementById('form-heading').textContent = formType === 'habit' ? 'เพิ่มนิสัยใหม่' : 'เพิ่มงานใหม่';
-    document.getElementById('submit-btn').textContent = formType === 'habit' ? 'บันทึกนิสัย' : 'บันทึกงาน';
+    document.getElementById('form-heading').textContent = 'เพิ่มงานใหม่';
+    document.getElementById('submit-btn').textContent = 'บันทึกงาน';
     document.getElementById('form-overlay').classList.add('open');
   }
 
@@ -1289,25 +1255,17 @@
     const t = tasks.find(t => t.id === id);
     if (!t) return;
     editingId = id;
-    formType = t.type === 'habit' ? 'habit' : 'homework';
+    formType = 'homework';
     document.getElementById('f-title').value = t.title;
     document.getElementById('f-note').value = t.note || '';
-    if (formType === 'homework') {
-      document.getElementById('f-subject').value = t.subjectCode;
-      setSubjectTriggerDisplay(t.subjectCode);
-      document.getElementById('f-duedate').value = t.dueDate || '';
-      document.getElementById('f-priority').value = t.priority || 'ปกติ';
-      formSubtasks = (t.subtasks || []).map(s => ({ ...s }));
-      renderSubtaskFormList();
-    } else {
-      document.getElementById('f-track-mode').value = t.trackingMode === 'levels' ? 'levels' : 'binary';
-      document.getElementById('f-levels').value = (t.levels || []).join(',');
-      document.getElementById('f-unit').value = t.unit || '';
-      document.getElementById('f-goal-type').value = t.goalType === 'weekly' ? 'weekly' : 'daily';
-      document.getElementById('f-weekly-target').value = t.weeklyTarget || 3;
-    }
+    document.getElementById('f-subject').value = t.subjectCode;
+    setSubjectTriggerDisplay(t.subjectCode);
+    document.getElementById('f-duedate').value = t.dueDate || '';
+    document.getElementById('f-priority').value = t.priority || 'ปกติ';
+    formSubtasks = (t.subtasks || []).map(s => ({ ...s }));
+    renderSubtaskFormList();
     applyFormTypeVisibility();
-    document.getElementById('form-heading').textContent = formType === 'habit' ? 'แก้ไขนิสัย' : 'แก้ไขงาน';
+    document.getElementById('form-heading').textContent = 'แก้ไขงาน';
     document.getElementById('submit-btn').textContent = 'บันทึกการแก้ไข';
     document.getElementById('form-error').style.display = 'none';
     document.getElementById('form-overlay').classList.add('open');
@@ -1321,11 +1279,6 @@
     document.getElementById('f-note').value = '';
     document.getElementById('f-priority').value = 'ปกติ';
     document.getElementById('f-subtask-input').value = '';
-    document.getElementById('f-track-mode').value = 'binary';
-    document.getElementById('f-levels').value = '';
-    document.getElementById('f-unit').value = '';
-    document.getElementById('f-goal-type').value = 'daily';
-    document.getElementById('f-weekly-target').value = '3';
     formSubtasks = [];
     renderSubtaskFormList();
     editingId = null;
@@ -1341,45 +1294,6 @@
       return;
     }
     const note = document.getElementById('f-note').value.trim();
-
-    if (formType === 'habit') {
-      const trackingMode = document.getElementById('f-track-mode').value;
-      const levels = trackingMode === 'levels'
-        ? document.getElementById('f-levels').value.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n) && n > 0)
-        : [];
-      const unit = document.getElementById('f-unit').value.trim();
-      const goalType = document.getElementById('f-goal-type').value === 'weekly' ? 'weekly' : 'daily';
-      const weeklyTarget = Math.max(1, Math.min(7, parseInt(document.getElementById('f-weekly-target').value, 10) || 3));
-      if (editingId) {
-        const t = tasks.find(t => t.id === editingId);
-        if (t) {
-          t.title = title;
-          t.note = note;
-          t.trackingMode = trackingMode;
-          t.levels = levels;
-          t.unit = unit;
-          t.goalType = goalType;
-          t.weeklyTarget = weeklyTarget;
-        }
-      } else {
-        tasks.push({
-          id: uid(),
-          type: 'habit',
-          title,
-          note,
-          trackingMode,
-          levels,
-          unit,
-          goalType,
-          weeklyTarget,
-          checkins: {},
-          createdAt: Date.now(),
-        });
-      }
-      closeForm();
-      persist();
-      return;
-    }
 
     const subjectCode = document.getElementById('f-subject').value;
     const dueDate = document.getElementById('f-duedate').value;
@@ -1455,113 +1369,56 @@
     render();
   }
 
-  function calcStreak(checkinsMap) {
-    const hasDay = d => !!checkinsMap[toLocalISODate(d)];
-    let cursor = new Date();
-    cursor.setHours(0, 0, 0, 0);
-    if (!hasDay(cursor)) {
-      cursor.setDate(cursor.getDate() - 1);
-    }
-    let streak = 0;
-    while (hasDay(cursor)) {
-      streak++;
-      cursor.setDate(cursor.getDate() - 1);
-    }
-    return streak;
-  }
+  function renderExamView() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-  function calcLongestStreak(checkinsMap) {
-    const dates = Object.keys(checkinsMap).filter(d => checkinsMap[d] > 0).sort();
-    if (dates.length === 0) return 0;
-    let longest = 1, current = 1;
-    for (let i = 1; i < dates.length; i++) {
-      const prev = new Date(dates[i - 1] + 'T00:00:00');
-      const cur = new Date(dates[i] + 'T00:00:00');
-      const diffDays = Math.round((cur - prev) / 86400000);
-      if (diffDays === 1) {
-        current++;
-      } else {
-        current = 1;
-      }
-      if (current > longest) longest = current;
-    }
-    return longest;
-  }
-
-  function getWeekStart(date) {
-    const d = new Date(date);
-    d.setHours(0, 0, 0, 0);
-    const day = d.getDay();
-    const diff = (day === 0 ? -6 : 1) - day;
-    d.setDate(d.getDate() + diff);
-    return d;
-  }
-
-  function countThisWeek(checkinsMap) {
-    const start = getWeekStart(new Date());
-    const end = new Date(start);
-    end.setDate(end.getDate() + 7);
-    let count = 0;
-    Object.keys(checkinsMap).forEach(iso => {
-      if (checkinsMap[iso] > 0) {
-        const d = new Date(iso + 'T00:00:00');
-        if (d >= start && d < end) count++;
-      }
+    const sorted = EXAMS.slice().sort((a, b) => {
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return new Date(a.date) - new Date(b.date);
     });
-    return count;
-  }
 
-  function calcWeeklyStreak(checkinsMap, target) {
-    const weekCounts = {};
-    Object.keys(checkinsMap).forEach(iso => {
-      if (checkinsMap[iso] > 0) {
-        const ws = getWeekStart(new Date(iso + 'T00:00:00'));
-        const key = toLocalISODate(ws);
-        weekCounts[key] = (weekCounts[key] || 0) + 1;
+    return sorted.map(ex => {
+      const typeClass = ex.examType === 'Midterm' ? 'midterm' : 'final';
+      if (!ex.date) {
+        return `
+          <div class="exam-card">
+            <div class="exam-card-left">
+              <div class="exam-date">${escapeHtml(ex.note || 'ไม่ระบุวันที่')}</div>
+            </div>
+            <div class="exam-card-mid">
+              <span class="exam-type-badge ${typeClass}">${ex.examType}</span>
+              <div class="exam-course">${ex.code} ${escapeHtml(ex.name)}</div>
+              <div class="exam-group">กลุ่ม ${escapeHtml(ex.group)}</div>
+            </div>
+          </div>
+        `;
       }
-    });
-    let cursor = getWeekStart(new Date());
-    let key = toLocalISODate(cursor);
-    if (!weekCounts[key] || weekCounts[key] < target) {
-      cursor.setDate(cursor.getDate() - 7);
-    }
-    let streak = 0;
-    while (true) {
-      key = toLocalISODate(cursor);
-      if (weekCounts[key] && weekCounts[key] >= target) {
-        streak++;
-        cursor.setDate(cursor.getDate() - 7);
-      } else break;
-    }
-    return streak;
-  }
+      const dleft = Math.round((new Date(ex.date + 'T00:00:00') - today) / 86400000);
+      const overdueExam = dleft < 0;
+      let countText, countClass;
+      if (overdueExam) { countText = 'สอบแล้ว'; countClass = 'past'; }
+      else if (dleft === 0) { countText = 'วันนี้!'; countClass = 'urgent'; }
+      else { countText = `${dleft} วัน`; countClass = dleft <= 3 ? 'urgent' : ''; }
 
-  function toggleHabitToday(id) {
-    toggleHabitDate(id, toLocalISODate(new Date()));
-  }
-
-  function toggleHabitDate(id, dateStr) {
-    const t = tasks.find(t => t.id === id);
-    if (!t) return;
-    t.checkins = t.checkins || {};
-    if (t.checkins[dateStr]) {
-      delete t.checkins[dateStr];
-    } else {
-      t.checkins[dateStr] = 1;
-    }
-    persist();
-  }
-
-  function setHabitLevel(id, dateStr, level) {
-    const t = tasks.find(t => t.id === id);
-    if (!t) return;
-    t.checkins = t.checkins || {};
-    if (t.checkins[dateStr] === level) {
-      delete t.checkins[dateStr];
-    } else {
-      t.checkins[dateStr] = level;
-    }
-    persist();
+      return `
+        <div class="exam-card">
+          <div class="exam-card-left">
+            <div class="exam-date">${formatThaiDateFull(ex.date)}</div>
+            <div class="exam-time">${ex.startTime} - ${ex.endTime}</div>
+          </div>
+          <div class="exam-card-mid">
+            <span class="exam-type-badge ${typeClass}">${ex.examType}</span>
+            <div class="exam-course">${ex.code} ${escapeHtml(ex.name)}</div>
+            <div class="exam-group">กลุ่ม ${escapeHtml(ex.group)}</div>
+          </div>
+          <div class="exam-card-right ${countClass}">
+            <b>${countText}</b>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
   function renderWorkoutView() {
@@ -1623,15 +1480,18 @@
     else if (hasSubtasks && doneCount > 0) statusText = `ทำแล้ว ${doneCount}/${subtasks.length} ส่วน`;
 
     let dueText = formatThaiDate(t.dueDate);
-    if (t.dueDate) {
-      if (overdueTask) dueText += ` (เลย ${Math.abs(dleft)} วัน)`;
-      else if (dleft === 0) dueText += ' (วันนี้)';
-      else if (dleft > 0) dueText += ` (อีก ${dleft} วัน)`;
-    }
 
-    let stamp = '';
-    if (t.submitted) stamp = '<div class="stamp done-stamp">ส่งแล้ว</div>';
-    else if (t.done) stamp = '<div class="stamp wait-stamp">รอส่ง</div>';
+    let cornerBadge = '';
+    if (t.submitted) {
+      cornerBadge = '<div class="stamp done-stamp">ส่งแล้ว</div>';
+    } else if (t.dueDate) {
+      const urgent = overdueTask || dleft <= 1;
+      let bigNum, bigLabel;
+      if (overdueTask) { bigNum = Math.abs(dleft); bigLabel = 'วันเลยกำหนด'; }
+      else if (dleft === 0) { bigNum = '0'; bigLabel = 'วันนี้!'; }
+      else { bigNum = dleft; bigLabel = 'วันเหลือ'; }
+      cornerBadge = `<div class="due-corner-badge ${urgent ? 'urgent' : ''}"><b>${bigNum}</b><span>${bigLabel}</span></div>`;
+    }
 
     const dateSubtasks = subtasks.filter(s => s.date);
     const manualSubtasks = subtasks.filter(s => !s.date);
@@ -1661,8 +1521,8 @@
 
     return `
       <div class="card ${overdueTask ? 'overdue' : ''} ${t.submitted ? 'submitted' : ''} ${deleteMode ? 'delete-mode' : ''} ${editMode ? 'edit-mode' : ''}" ${deleteMode ? `onclick="confirmDelete('${t.id}')"` : editMode ? `onclick="openEditForm('${t.id}')"` : ''}>
-        ${stamp}
-        <div class="card-main">
+        ${cornerBadge}
+        <div class="card-main ${cornerBadge ? 'has-corner-badge' : ''}">
           <div style="flex:1;min-width:0;">
             <div class="card-title ${t.submitted ? 'strike' : ''}">${escapeHtml(t.title)}</div>
             <div class="card-subject" style="background:${groupColor(subj.group).bg};color:${groupColor(subj.group).text};">${subj.code} · ${escapeHtml(subj.short)}</div>
@@ -1694,207 +1554,8 @@
     `;
   }
 
-  function habitMaxValue(t) {
-    if (t.trackingMode === 'levels' && t.levels && t.levels.length) return Math.max(...t.levels);
-    return 1;
-  }
-
-  function intensityStyle(value, max) {
-    if (!value) return '';
-    const alpha = (0.28 + 0.72 * Math.min(value / max, 1)).toFixed(2);
-    return `background-color:rgba(63,133,112,${alpha});border-color:rgba(63,133,112,${alpha});color:#fff;`;
-  }
-
-  function buildMiniHeatmap(t, days) {
-    const checkins = t.checkins || {};
-    const max = habitMaxValue(t);
-    const isLevels = t.trackingMode === 'levels' && t.levels && t.levels.length > 0;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const cells = [];
-    for (let i = days - 1; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(d.getDate() - i);
-      const iso = toLocalISODate(d);
-      cells.push({ iso, val: checkins[iso] || 0 });
-    }
-
-    const cellsHtml = cells.map(c => {
-      const style = c.val ? intensityStyle(c.val, max) : '';
-      const clickable = !isLevels ? `onclick="toggleHabitDate('${t.id}','${c.iso}')" style="cursor:pointer;${style}"` : `style="${style}"`;
-      const title = c.val ? `${formatThaiDate(c.iso)} — ${c.val}${t.unit || ''}` : formatThaiDate(c.iso);
-      return `<div class="mini-heatmap-cell" title="${title}" ${clickable}></div>`;
-    }).join('');
-
-    return `<div class="mini-heatmap-wrap"><div class="mini-heatmap-label">${days} วันล่าสุด</div><div class="mini-heatmap-row">${cellsHtml}</div></div>`;
-  }
-
-  function thaiMonthYear(date) {
-    const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
-    return `${months[date.getMonth()]} ${date.getFullYear() + 543}`;
-  }
-
-  function renderHabitCard(t) {
-    const checkins = t.checkins || {};
-    const isWeekly = t.goalType === 'weekly';
-    const weeklyTarget = t.weeklyTarget || 3;
-    const streak = isWeekly ? calcWeeklyStreak(checkins, weeklyTarget) : calcStreak(checkins);
-    const thisWeekCount = countThisWeek(checkins);
-    const todayIso = toLocalISODate(new Date());
-    const yesterdayDate = new Date();
-    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-    const yesterdayIso = toLocalISODate(yesterdayDate);
-    const target = logDayTarget[t.id] === 'today' ? 'today' : 'yesterday';
-    const targetIso = target === 'yesterday' ? yesterdayIso : todayIso;
-    const targetVal = checkins[targetIso] || 0;
-    const isLevels = t.trackingMode === 'levels' && t.levels && t.levels.length > 0;
-
-    const streakBadge = isWeekly
-      ? `<span class="habit-streak-badge">🔥${thisWeekCount}/${weeklyTarget}</span>`
-      : `<span class="habit-streak-badge">🔥${streak}</span>`;
-
-    const dayToggleHtml = `
-        <div class="habit-day-toggle habit-day-toggle-compact">
-          <button type="button" class="${target === 'today' ? 'active' : ''}" onclick="setLogDayTarget('${t.id}','today')">วันนี้</button>
-          <button type="button" class="${target === 'yesterday' ? 'active' : ''}" onclick="setLogDayTarget('${t.id}','yesterday')">เมื่อวาน</button>
-        </div>`;
-
-    const controlHtml = isLevels ? `
-        <div class="habit-control-row">
-          ${dayToggleHtml}
-          <div class="habit-level-row habit-level-row-compact">
-            ${t.levels.map(lv => `<button type="button" class="habit-level-btn ${targetVal === lv ? 'active' : ''}" onclick="setHabitLevel('${t.id}','${targetIso}',${lv})">${lv}</button>`).join('')}
-          </div>
-        </div>` : `
-        <div class="habit-control-row">
-          ${dayToggleHtml}
-          <button type="button" class="habit-today-btn habit-today-btn-compact ${targetVal > 0 ? 'done' : ''}" onclick="toggleHabitDate('${t.id}','${targetIso}')">${targetVal > 0 ? '✓' : 'ติ๊ก'}</button>
-        </div>`;
-
-    return `
-      <div class="card habit-card habit-card-compact ${deleteMode ? 'delete-mode' : ''} ${editMode ? 'edit-mode' : ''}" ${deleteMode ? `onclick="confirmDelete('${t.id}')"` : editMode ? `onclick="openEditForm('${t.id}')"` : ''}>
-        <div class="habit-card-body habit-card-body-compact">
-          <div class="habit-title-row">
-            <div class="card-title">${escapeHtml(t.title)}</div>
-            ${streakBadge}
-          </div>
-          ${controlHtml}
-          <button type="button" class="habit-stats-btn habit-stats-btn-compact" onclick="openStats('${t.id}')">📊</button>
-        </div>
-      </div>
-    `;
-
-  }
-
-  function openStats(id) {
-    statsHabitId = id;
-    statsPeriod = 'all';
-    document.getElementById('stats-period-all').classList.add('active');
-    document.getElementById('stats-period-30').classList.remove('active');
-    document.getElementById('stats-period-7').classList.remove('active');
-    renderStatsContent();
-    document.getElementById('stats-overlay').classList.add('open');
-  }
-
-  function closeStats() {
-    document.getElementById('stats-overlay').classList.remove('open');
-    statsHabitId = null;
-  }
-
-  function setStatsPeriod(period) {
-    statsPeriod = period;
-    document.getElementById('stats-period-all').classList.toggle('active', period === 'all');
-    document.getElementById('stats-period-30').classList.toggle('active', period === '30');
-    document.getElementById('stats-period-7').classList.toggle('active', period === '7');
-    renderStatsContent();
-  }
-
-  function renderStatsContent() {
-    const t = tasks.find(tt => tt.id === statsHabitId);
-    if (!t) return;
-    document.getElementById('stats-title').textContent = t.title;
-
-    const checkins = t.checkins || {};
-    const max = habitMaxValue(t);
-    const isLevels = t.trackingMode === 'levels' && t.levels && t.levels.length > 0;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    let rangeDays;
-    if (statsPeriod === '7') rangeDays = 7;
-    else if (statsPeriod === '30') rangeDays = 30;
-    else {
-      const created = new Date(t.createdAt);
-      created.setHours(0, 0, 0, 0);
-      const diffDays = Math.round((today - created) / 86400000) + 1;
-      rangeDays = Math.min(Math.max(diffDays, 7), 371);
-    }
-
-    const rangeStart = new Date(today);
-    rangeStart.setDate(rangeStart.getDate() - (rangeDays - 1));
-
-    const gridStart = new Date(rangeStart);
-    gridStart.setDate(gridStart.getDate() - gridStart.getDay());
-
-    const cells = [];
-    let cursor = new Date(gridStart);
-    while (cursor <= today) {
-      const iso = toLocalISODate(cursor);
-      cells.push({ iso, val: checkins[iso] || 0, inRange: cursor >= rangeStart });
-      cursor.setDate(cursor.getDate() + 1);
-    }
-    while (cells.length % 7 !== 0) {
-      cells.push({ iso: null, val: 0, inRange: false, pad: true });
-    }
-
-    document.getElementById('heatmap-grid').innerHTML = cells.map(c => {
-      if (c.pad) return `<div class="heatmap-cell" style="visibility:hidden;"></div>`;
-      const style = c.val ? intensityStyle(c.val, max) : '';
-      const dim = c.inRange ? '' : 'opacity:0.3;';
-      const clickable = (!isLevels && c.inRange) ? `onclick="toggleHabitDate('${t.id}','${c.iso}')" style="cursor:pointer;${style}${dim}"` : `style="${style}${dim}"`;
-      const title = c.val ? `${formatThaiDate(c.iso)} — ${c.val}${t.unit || ''}` : formatThaiDate(c.iso);
-      const dayNum = new Date(c.iso + 'T00:00:00').getDate();
-      return `<div class="heatmap-cell" title="${title}" ${clickable}>${dayNum}</div>`;
-    }).join('');
-
-    document.getElementById('heatmap-legend').innerHTML = `
-      <span>น้อย</span>
-      <div class="heatmap-cell" style="background:var(--card-warm);"></div>
-      <div class="heatmap-cell" style="${intensityStyle(max * 0.33, max)}"></div>
-      <div class="heatmap-cell" style="${intensityStyle(max * 0.66, max)}"></div>
-      <div class="heatmap-cell" style="${intensityStyle(max, max)}"></div>
-      <span>มาก</span>
-    `;
-
-    const inRangeCells = cells.filter(c => c.inRange);
-    const activeDays = inRangeCells.filter(c => c.val > 0).length;
-    const totalAmount = inRangeCells.reduce((sum, c) => sum + c.val, 0);
-    const currentStreak = calcStreak(checkins);
-    const longestStreak = calcLongestStreak(checkins);
-
-    const cards = [
-      { label: statsPeriod === 'all' ? 'ทำไปแล้วทั้งหมด' : 'ทำในช่วงนี้', val: activeDays + ' วัน' },
-      { label: 'ต่อเนื่องตอนนี้', val: currentStreak + ' วัน' },
-      { label: 'สถิติต่อเนื่องสูงสุด', val: longestStreak + ' วัน' },
-    ];
-    if (isLevels) {
-      cards.push({ label: `รวม${t.unit ? ' (' + t.unit + ')' : ''}`, val: totalAmount });
-    } else {
-      cards.push({ label: 'อัตราทำสำเร็จ', val: inRangeCells.length ? Math.round((activeDays / inRangeCells.length) * 100) + '%' : '—' });
-    }
-
-    document.getElementById('stats-cards').innerHTML = cards.map(c => `
-      <div class="stat-card">
-        <div class="stat-card-label">${escapeHtml(c.label)}</div>
-        <div class="stat-card-val">${c.val}</div>
-      </div>
-    `).join('');
-  }
-
   function render() {
     const hwTasks = tasks.filter(t => t.type !== 'habit');
-    const habitTasks = tasks.filter(t => t.type === 'habit');
 
     const notSubmitted = hwTasks.filter(t => !t.submitted).length;
     const waiting = hwTasks.filter(t => t.done && !t.submitted).length;
@@ -1905,44 +1566,19 @@
     document.getElementById('stat-total').textContent = hwTasks.length;
     document.getElementById('stat-overdue-wrap').className = overdue > 0 ? 'warn' : '';
 
-    const todayIso = toLocalISODate(new Date());
-    document.getElementById('stat-habit-total').textContent = habitTasks.length;
-    document.getElementById('stat-habit-today').textContent = habitTasks.filter(t => (t.checkins || {})[todayIso] > 0).length;
-
     const container = document.getElementById('task-list');
-    const summaryBar = document.getElementById('habit-summary-bar');
 
     if (activeCategory === 'workout') {
-      container.classList.remove('habit-grid');
-      summaryBar.style.display = 'none';
       document.getElementById('empty-state').style.display = 'none';
       container.innerHTML = renderWorkoutView();
       return;
     }
 
-    if (activeCategory === 'habit') {
-      container.classList.add('habit-grid');
-      const list = habitTasks.slice().sort((a, b) => b.createdAt - a.createdAt);
-      document.getElementById('empty-state').style.display = list.length === 0 ? 'block' : 'none';
-      document.getElementById('empty-state').textContent = 'ยังไม่มีนิสัยที่ติดตามอยู่ — กด "เพิ่มนิสัย" เพื่อเริ่มติดตามนิสัยแรกของคุณ';
-      if (list.length > 1) {
-        summaryBar.style.display = 'flex';
-        summaryBar.innerHTML = list.map(t => {
-          const checkins = t.checkins || {};
-          const isWeekly = t.goalType === 'weekly';
-          const streak = isWeekly ? calcWeeklyStreak(checkins, t.weeklyTarget || 3) : calcStreak(checkins);
-          const doneToday = (checkins[todayIso] || 0) > 0;
-          return `<button type="button" class="habit-summary-chip ${doneToday ? 'done' : ''}" onclick="openStats('${t.id}')"><span class="dot"></span>${escapeHtml(t.title)} <b>${streak}${isWeekly ? 'สัปดาห์' : 'วัน'}</b></button>`;
-        }).join('');
-      } else {
-        summaryBar.style.display = 'none';
-      }
-      container.innerHTML = list.map(renderHabitCard).join('');
+    if (activeCategory === 'exam') {
+      document.getElementById('empty-state').style.display = 'none';
+      container.innerHTML = renderExamView();
       return;
     }
-
-    container.classList.remove('habit-grid');
-    summaryBar.style.display = 'none';
 
     document.getElementById('empty-state').textContent = 'ยังไม่มีงานในสมุดตอนนี้ — กด "เพิ่มงาน" เพื่อบันทึกงานหรือการบ้านชิ้นแรก';
     let list = showSubmitted ? hwTasks.slice() : hwTasks.filter(t => !t.submitted);
@@ -1969,6 +1605,7 @@
   }
 
   registerServiceWorker();
+  updateGradBanner();
   loadWorkout();
   loadTasks();
   checkBackupReminder();
